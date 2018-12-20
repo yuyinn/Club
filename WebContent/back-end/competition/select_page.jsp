@@ -64,10 +64,10 @@
    
   <li>
      <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/competition.do" >
-       <b>選擇社團編號:</b>
+       <b>選擇賽事編號:</b>
        <select size="1" name="comp_no">
          <c:forEach var="competitionVO" items="${competitionSvc.all}" > 
-          <option value="${competitionVO.comp_no}">${competitionVO.competition_no}
+          <option value="${competitionVO.comp_no}">${competitionVO.comp_no}
          </c:forEach>   
        </select>
        <input type="hidden" name="action" value="getOne_For_Display">

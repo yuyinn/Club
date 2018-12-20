@@ -323,11 +323,16 @@ if ("insert".equals(action)) { // 來自addEmp.jsp的請求
 	}
 	
 
-	private Object getFileNameFromPart(Part part) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+//	public String getFileNameFromPart(Part part) {
+//		String header = part.getHeader("content-disposition");
+//		System.out.println("header=" + header); // 測試用
+//		String filename = new File(header.substring(header.lastIndexOf("=") + 2, header.length() - 1)).getName();
+//		System.out.println("filename=" + filename); // 測試用
+//		if (filename.length() == 0) {
+//			return null;
+//		}
+//		return filename;
+//	}
 	public static byte[] readFully(InputStream input) throws IOException
 	{
 		byte[] buffer = new byte[8192];

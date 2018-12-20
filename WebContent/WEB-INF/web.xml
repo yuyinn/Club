@@ -77,6 +77,15 @@
     <servlet-name>VenueServlet</servlet-name>
     <url-pattern>/venue/venue.do</url-pattern>
   </servlet-mapping>
+  
+   <servlet>
+  	<servlet-name>CompetitionServlet</servlet-name>
+  	<servlet-class>com.competition.controller.CompetitionServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>CompetitionServlet</servlet-name>
+  	<url-pattern>/competition.do</url-pattern>
+  </servlet-mapping>
 
 
 </web-app>
