@@ -153,30 +153,14 @@ if ("update".equals(action)) { // 來自update_emp_input.jsp的請求
 //				comp_startdate=new java.sql.Date(System.currentTimeMillis());
 //				errorMsgs.add("請輸入賽事開始日期!");
 //			}
+//			
+//			java.sql.Timestamp dToTimestamp = new java.sql.Timestamp(new java.util.Date().getTime()); 
+//		 	java.util.Date tspToDate = new java.util.Date(new java.sql.Timestamp(System.currentTimeMillis()).getTime());
 			
-			Timestamp comp_startdate = new Timestamp(System.currentTimeMillis());  
-			String csStr = "";  
-			DateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");  
-			comp_startdateStr = null;
-			try {  
-			csStr = sdf.format(comp_startdate);  
-			System.out.println(csStr);
-			} catch (Exception e) {  
-			    errorMsgs.add("請輸入賽事開始時間");
-			} 
+			java.sql.Date comp_startdate = null;
+			java.sql.Timestamp cs = new java.sql.Timestamp(new java.sql.Date(System.currentTimeMillis()).getTime());
 			
 			
-			
-			Timestamp comp_enddate = new Timestamp(System.currentTimeMillis());  
-			String ceStr = "";  
-			DateFormat sdf2 = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");  
-			comp_enddate = null;
-			try {  
-			ceStr = sdf2.format(comp_enddate);  
-			System.out.println(ceStr);
-			} catch (Exception e) {  
-			    errorMsgs.add("請輸入賽事開始時間");
-			} 
 			
 			
 			String comp_cont = req.getParameter("comp_cont").trim();

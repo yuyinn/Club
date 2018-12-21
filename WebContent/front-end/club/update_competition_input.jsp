@@ -93,13 +93,8 @@
 </table>
 <br>
 <input type="hidden" name="action" value="update">
-<input type="hidden" name="Comp_no" value="<%=competitionVO.getComp_no()%>">
+<input type="hidden" name="comp_no" value="<%=competitionVO.getComp_no()%>">
 <input type="submit" value="送出修改"></FORM>
-<script src="https://code.jquery.com/jquery.js"></script>	
-	
-<script type="text/javascript"> 
-
-</script>
 </body>
 
 
