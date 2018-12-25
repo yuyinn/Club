@@ -3,7 +3,7 @@
 <%@ page import="com.club.model.*"%>
 
 <%
-  ClubVO clubVO = (ClubVO) request.getAttribute("clubVO"); //EmpServlet.java (Concroller) 存入req的empVO物件 (包括幫忙取出的empVO, 也包括輸入資料錯誤時的empVO物件)
+  ClubVO clubVO = (ClubVO) request.getAttribute("clubVO"); 
 %>
 
 <html>

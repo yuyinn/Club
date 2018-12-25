@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+		<title>Title Page</title>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+		<!--[if lt IE 9]>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+		<style type="text/css">
+			
+			textarea {
+  			resize : none; 
+			}
+
+			.modal-footer{
+			display:flex;
+   			align-items:center;
+    		justify-content:center; 
+			}
+		</style>
+	</head>
+
+	<!--data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" -->
+	<body>
+		<div class="container-fluid">
+			<div class="row">
+				<div class="container">
+					<div class="row">
+						<div class="col-xs-12 col-sm-4">
+							<div class="list-group active">
+							<a href="#" class="list-group-item" data-toggle="modal" data-target="#exampleModalLong">建立社團</a>
+<!------------ Modal ------------>
+<div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog  .modal-dialog-centered " role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="exampleModalLongTitle">建立社團</h3>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="/CA105G1/Club/Club.do" method="post" enctype="multipart/form-data">
+						<br>
+						<br>
+						<div class="form-group">
+								<img src="/CA105G1/img/no-image.PNG" id="photo">
+								<input type="file" id="photo" name="photo"><br>				
+						</div>
+						<br>
+						<br>
+
+						<div class="form-group">
+							<label class="club_name">社團名稱</label>
+							<input type="text" name="club_name" id="club_name" class="form-control">
+						</div>
+						<br>
+						<br>
+				
+						<div class="form-group">
+							<label class="sport" >運動項目</label>
+							<select name="sport" id="sport" class="form-control"></select>
+						</div>
+						<br>
+						<br>
+
+						<div class="form-group">
+							
+							<label class="club_intro">社團簡介</label>
+							<textarea name="club_intro" id="club_intro" class="form-control" ROWS=10 ></textarea>	
+						</div>
+						<br>
+						<br>
+						
+
+		</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+        <button type="button" class="btn btn-primary">送出</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!------------ Modal ------------>
+							<a href="#" class="list-group-item">社團管理</a>
+							<a href="#" class="list-group-item">影音相簿</a>
+							<a href="#" class="list-group-item">文章</a>
+							</div>
+						</div>
+						<div class="col-xs-12 col-sm-8">
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		
+		
+		<script src="https://code.jquery.com/jquery.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	</body>
+</html>

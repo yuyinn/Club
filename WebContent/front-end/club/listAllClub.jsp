@@ -11,6 +11,7 @@
     pageContext.setAttribute("list",list);
 %>
 
+<jsp:useBean id="sportSvc" scope="page" class="com.sport.model.SportService" />
 
 <html>
 <head>
@@ -74,7 +75,7 @@
 <table>
 	<tr>
 		<th>社團編號</th>
-		<th>運動項目編號</th>
+		<th>運動項目</th>
 		<th>照片</th>
 		<th>照片副檔名</th>
 		<th>社團狀態</th>
@@ -88,7 +89,13 @@
 		
 		<tr>
 			<td>${clubVO.club_no}</td>
-			<td>${clubVO.sp_no}</td>
+			<td>
+				<c:forEach var="sportVO" items="${sportSvc.all}">
+                    <c:if test="${clubVO.sp_no==sportVO.sp_no}">
+	                    ${sportVO.sp_name}
+                    </c:if>
+                </c:forEach>
+               </td>
 			<td><img src="<%=request.getContextPath()%>/clubImg.do?club_no=${clubVO.club_no}"  width="70%"/></td>
 			<td>${clubVO.photo_ext}</td>
 			<td>${clubVO.club_status}</td>

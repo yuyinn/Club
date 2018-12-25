@@ -76,6 +76,36 @@
   </li> 
   
    
+   <li>
+     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/club.do" >
+       <b>選擇社團名稱:</b>
+       <select size="1" name="club_name">
+         <c:forEach var="clubVO" items="${clubSvc.all}" > 
+          <option value="${clubVO.club_no}">${clubVO.club_name}
+         </c:forEach>   
+       </select>
+       <input type="submit" value="送出">
+       <input type="hidden" name="action" value="getOne_For_Display">
+     </FORM>
+  </li>
+  
+  <!--
+   <jsp:useBean id="sportSvc" scope="page" class="com.sport.model.SportService" />
+  
+  <li>
+     <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/sport.do" >
+       <b><font color=orange>選擇運動項目:</font></b>
+       <select size="1" name="sp_no">
+         <c:forEach var="sportVO" items="${sportSvc.all}" > 
+          <option value="${sportVO.sp_no}">${sportVO.sp_name}
+         </c:forEach>   
+       </select>
+       <input type="submit" value="送出">
+       <input type="hidden" name="action" value="listEmps_BySp_no_A">
+     </FORM>
+  </li>
+    -->
+   
 
 
 <h3>社團管理</h3>

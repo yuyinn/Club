@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+		<title>Title Page</title>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+		<!--[if lt IE 9]>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
+		<![endif]-->
+		<style type="text/css">
+			
+			textarea {
+  			resize : none; 
+		}
+		</style>
+		
+	</head>
+	<body>
+		<div class="container">
+			<div class="row">
+			<div class="col-xs-12 col-sm-3"></div>
+				<div class="col-xs-12 col-sm-6">
+					<table class="table table-hover table-striped table-bordered text-center">
+					<form action="/CA105G1/Club/Club.do" method="post" enctype="multipart/form-data">
+						<br>
+						<br>
+						<div class="form-group">
+						
+						
+								<img src="/CA105G1/img/no-image.PNG" id="photo">
+								<input type="file" id="photo" name="photo"><br>
+							
+						
+						</div>
+						<br>
+						<br>
+
+						<div class="form-group">
+							<label class="club_name">社團名稱</label>
+							<input type="text" name="club_name" id="club_name" class="form-control">
+						</div>
+						<br>
+						<br>
+						
+						<div class="form-group">
+							<label class="sport">運動項目</label>
+							<select name="sport" id="sport" class="form-control"></select>
+						</div>
+						<br>
+						<br>
+						<div class="form-group">
+							
+							<label class="club_intro">社團簡介</label>
+							<textarea name="club_intro" id="club_intro" class="form-control"  COLS=50 ROWS=10 ></textarea>
+							
+						</div>
+						<br>
+						<br>
+						
+						<input type="submit" value="送出" class="btn btn-sucess btn-block">
+						<input type="hidden" name="action"value="insert">
+					</form>
+				</div>
+				<div class="col-xs-12 col-sm-6">
+					
+				</div>
+			</div>
+		</div>
+	</table>
+</body>
+<script src="https://code.jquery.com/jquery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</html>
