@@ -33,6 +33,8 @@
 	<!--data-toggle="collapse" href="#collapseExample" aria-expanded="false" aria-controls="collapseExample" -->
 
 	<body>
+	<%@ include file="/front-end/CA105G1_header.file" %>
+	
 		<div class="container-fluid">
 			<div class="row">
 				<div class="container">
@@ -117,6 +119,7 @@
 		
 		
 		</form>
+		<%@ include file="/front-end/CA105G1_footer.file" %>
 		<script src="https://code.jquery.com/jquery.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	</body>

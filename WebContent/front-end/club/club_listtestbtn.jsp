@@ -24,22 +24,55 @@
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
 		<![endif]-->
 <style type="text/css">
-/* .card-text{ */
-/* 	height:8rem; */
-/* } */
-.card-img-top { 
- 	width: 100%;
-} 
 
-.CARD {  
-  	WIDTH: 35rem;
-	padding-left:20px; 
-	padding-right:20px; 
-  	margin-left:20px;
-  	margin-right:15px
-  	display:flex;
+.card{
+			/* 設定父親定位點 */
+			position: relative;
+			width: 270px;
+			float:left;
+			margin: 20px;
+		}
+		.img{
+			display: block;
+			width: 100%;
+			height: auto;
+		}
+		.card-body{
+			/*   display: none; */
+			opacity: 0;
+			position: absolute;
+			box-sizing: border-box;
+			background-color: rgba(0,0,0,.3);
+			top: 0;
+			width: 100%;
+			height: 100%;
+			text-align: center;
+			padding-top: 40px;
+		}
+		.card-body p{
+			color: #fff;
+		}
+		.card-body:hover{
+			-webkit-transition: 500ms;
+			opacity: 1;
+		}
+ .card-text{ 
+ 	height:8rem; 
+ 	color:white
+ } 
+/* .card-img-top {  */
+/*  	width: 100%; */
+/* }  */
+
+/* .CARD {   */
+/*   	WIDTH: 35rem; */
+/* 	padding-left:20px;  */
+/* 	padding-right:20px;  */
+/*   	margin-left:20px; */
+/*   	margin-right:15px */
+/*   	display:flex; */
   	
-  }  
+/*   }   */
  
  .flex{ 
   	display:inline-flex;  
@@ -57,10 +90,7 @@
  	padding-right:0px;
  	
  } 
-.img-responsive.card-img-top{
-	width:300px;
-	height:200px;
-}
+
 </style>
 
 
@@ -143,26 +173,27 @@
 				</div>
 				
 				<div class="col-xs-12 col-lg-9">
-			    		<c:forEach var="clubVO" items="${list}">
-								<div class="col-xs-12 col-sm-4">
-										<div class="container_1" style="padding:15px,20px,15px,20px">
-										<div class="card" >
-											<div>
-											<img class="img-responsive card-img-top" src="<%=request.getContextPath()%>/clubImg.do?club_no=${clubVO.club_no}">
-											</div>
-											<div class="card-body">
-												<h4 class="card-title">${clubVO.club_name}</h4>
-												<p class="card-text">${clubVO.club_intro}</p>
-												<div class="row" >
+			<c:forEach var="clubVO" items="${list}">
+				<div class="col-xs-12 col-sm-4">
+					<div class="container_1" style="padding:15px,20px,15px,20px">
+						<div class="card" >
+							<div>
+								<img class="img-responsive card-img-top" src="<%=request.getContextPath()%>/clubImg.do?club_no=${clubVO.club_no}">
+							</div>
+									<div class="card-body">
+										<h4 class="card-title">${clubVO.club_name}</h4>
+<%-- 										<p class="card-text">${clubVO.club_intro}</p> --%>
+											<div class="row" >
 												<a href="#" class="btn btn-primary">加入</a>
-												</div>
-												<br> <br>
 											</div>
-										</div>
+									<br> <br>
 									</div>
-								</div>
-						</c:forEach>
-				</div>
+							</div>
+						</div>
+					</div>
+			</c:forEach>
+		</div> 
+
 	</div>
 <%@ include file="/front-end/CA105G1_footer.file" %>
 	<script src="https://code.jquery.com/jquery.js"></script>
