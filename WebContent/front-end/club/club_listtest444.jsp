@@ -24,6 +24,7 @@
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
 		<![endif]-->
 <style type="text/css">
+
 .card-img-top {
  	width: 100%; 
  
@@ -48,67 +49,77 @@
 .container{
 	background-color:#E6E6FA
 }
-  
-
-/*  .card-img-top{  */
-/*  	width:100%  */
-/*  }  */
 
  #col12{ 
  	padding-left:0px; 
  	padding-right:0px;
  	
  } 
- 
- 
+  
 </style>
 
 
 </head>
 <body>
-	<a href="#" class="btn btn-success">創建社團</a>
-	<div class="container">
-		<div class="row align-items-start">
-			<div class="panel panel-info">
-				<div class="panel-heading">
-					<h1 class="panel-title">社團列表</h1>
-				</div>
-				<div class="col-xs-12 col-sm-12" id="col12">
-					
-					<c:forEach var="clubVO" items="${list}">
-						<div class="flex flex-wap">
-							<table class="table table-hover">
-							
-							
-<!-- 							<div class="row align-items-start">		 -->
-							<div class="col align-self-center " >
-								
-								<br><br>
-								<div class="card" >
-									<img class="card-img-top"
-										src="<%=request.getContextPath()%>/clubImg.do?club_no=${clubVO.club_no} "
-										>
-									<div class="card-body">
-										<h4 class="card-title">${clubVO.club_name}</h4>
-										<p class="card-text">${clubVO.club_intro}</p>
-										<a href="#" class="btn btn-primary">加入</a>
-									</div>
-								</div> 
-								</div> 
-<!-- 						 		</div> -->
-						    
-						    
-							</table>
-					   </div>
-					</c:forEach>
-				
-				    </div>
-				</div>
-			</div>
-		</div>
-	</div>
+<br>
+
+
+
+	<div class="container-fulid">
+		<ol class="breadcrumb">
+			<li>
+				<a href="#">首頁</a>
+			</li>
+			<li class="active">社團列表</li>
+		</ol>
 	</div>
 
+	<div class="container-fulid">
+		<div class="row">
+
+				<div class="col-xs-12 col-lg-2">
+					<div class="panel-group" id="accordion2" role="tablist" aria-multiselectable="true">
+						<div class="panel panel-default">
+							<div class="panel-heading" role="tab" id="panel1">
+							<h4 class="panel-title">
+							<a href="#aaa" data-parent="#accordion2" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="aaa">
+							社團列表
+							</a>
+								</h4>
+								</div>
+								<div id="aaa" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="panel1">
+								<div class="list-group">
+								<a href="#" class="list-group-item">已加入的社團</a>
+								<a href="#" class="list-group-item">創建社團</a>
+								<a href="#" class="list-group-item">搜尋社團</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-xs-12 col-lg-9">
+
+			    		<c:forEach var="clubVO" items="${list}">
+			    		
+
+								<div class="col-xs-12 col-sm-4">
+									<div class="row">
+										<div class="card" >
+											<img class="img-responsive"  width="600" height="auto" class="card-img-top" src="<%=request.getContextPath()%>/clubImg.do?club_no=${clubVO.club_no}">
+											<div class="card-body">
+												<h4 class="card-title">${clubVO.club_name}</h4>
+												<p class="card-text">${clubVO.club_intro}</p>
+												<a href="#" class="btn btn-primary">加入</a>
+											</div>
+										</div>
+									</div>
+								</div>
+
+						</c:forEach>
+
+		</div>
+	</div>
 
 	<script src="https://code.jquery.com/jquery.js"></script>
 	<script
