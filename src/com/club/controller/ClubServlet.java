@@ -20,8 +20,14 @@ import com.club.model.ClubService;
 import com.club.model.ClubVO;
 
 
-@MultipartConfig
+@MultipartConfig(fileSizeThreshold=1024*1024, maxFileSize=5*1024*1024, maxRequestSize=5*5*1024*1024)
 public class ClubServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+	
+	public ClubServlet(){
+		super();
+	}
+	
 	public void doGet(HttpServletRequest req, HttpServletResponse res)
 			throws ServletException, IOException {
 		doPost(req, res);
@@ -241,8 +247,6 @@ if ("update".equals(action)) { // 來自update_emp_input.jsp的請求
 if ("insert".equals(action)) { // 來自addEmp.jsp的請求  
 			
 			List<String> errorMsgs = new LinkedList<String>();
-			// Store this set in the request scope, in case we need to
-			// send the ErrorPage view.
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {

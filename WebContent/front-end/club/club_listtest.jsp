@@ -27,9 +27,9 @@
 /* .card-text{ */
 /* 	height:8rem; */
 /* } */
-.card-img-top { 
- 	width: 100%;
-} 
+ .card-img-top {  
+  	width: 100%; 
+ }  
 
 .CARD {  
   	WIDTH: 35rem;
@@ -57,10 +57,10 @@
  	padding-right:0px;
  	
  } 
-.img-responsive.card-img-top{
-	width:300px;
-	height:200px;
-}
+/* .img-responsive.card-img-top{ */
+/* 	width:300px; */
+/* 	height:200px; */
+/* } */
 </style>
 
 
@@ -96,7 +96,7 @@
 												<div class="modal-body ">
 													<br> <br>
 													<div class="form-group">
-														<img src="/CA105G1/img/no-image.PNG" id="photo"  width="auto"> 
+														<img src="/CA105G1/img/no-image.PNG" id="photo" > 
 														<input type="file" id="photo" name="photo"><br>
 													</div>
 													<br> <br>
@@ -135,7 +135,45 @@
 <!---Modal------------------------------------------------------------------------------------>
 <!---建立社團--------------------------------------------------------------------------------->
 								<a class="list-group-item list-group-item-action " data-toggle="list" href="#searchclub" role="tab">搜尋社團</a>
-
+				      	<form method="post" action="<%= request.getContextPath()%>/club/club.do">
+				      		<div class="table-responsive">
+					      		<table class="table table-hover text-center" align="center">
+					      			<thead >
+					      			<!-------- 運動種類查詢 --------->
+						      			<tr>
+						      				<th>運動種類</th>
+					      				</tr>
+					      				<tr>
+						      				<th>
+						      					<jsp:useBean id="sportSvc" scope="page" class="com.sport.model.SportService" />
+						      					<select size="1" name="sp_no" class="text-center">
+						      						<option value="">請選擇運動種類
+													<c:forEach var="sportVO" items="${sportSvc.all}" > 
+														<option value="${sportVO.sp_no}" ${(clubVO.sp_no==sportVO.sp_no)?'selected':'' } >${sportVO.sp_name}
+													</c:forEach>   
+												</select>
+						      				</th>
+						      			</tr>
+					      			<!-------- 關鍵字查詢 --------->
+						      			<tr>
+						      				<th>關鍵字</th>
+					      				<tr>
+					      				</tr>
+						      				<th>
+						      					<input name="keyword" id="keyword" type="text" class="text-center" placeholder="請輸入關鍵字">
+						      				</th>
+						      			</tr>
+					      			<!-------- 送出查詢 --------->
+						      			<tr>
+						      				<input type="hidden" name="action" value="sg_infoCompositeQuery">
+						      				<td><input type="submit" value="送出查詢" class="btn btn-primary"></td>
+						      			</tr>
+						      			
+					      			</thead >
+					      		</table>
+				      		</div>
+				      	</form>
+				
 							</div>
 						</div>
 						</div>
