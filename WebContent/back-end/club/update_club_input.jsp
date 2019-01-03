@@ -3,7 +3,7 @@
 <%@ page import="com.club.model.*"%>
 
 <%
-  ClubVO clubVO = (ClubVO) request.getAttribute("clubVO"); 
+  ClubVO clubVO = (ClubVO) request.getAttribute("clubVO"); //EmpServlet.java (Concroller) 存入req的empVO物件 (包括幫忙取出的empVO, 也包括輸入資料錯誤時的empVO物件)
 %>
 
 <html>
@@ -73,30 +73,19 @@
 		<td>社團編號:</td>
 		<td><input type="TEXT" name="club_no" size="45"	value="<%=clubVO.getClub_no()%>" /></td>
 	</tr>
-	
-	
-	<jsp:useBean id="sportSvc" scope="page" class="com.sport.model.SportService" />
 	<tr>
 		<td>運動項目編號:</td>
-		<td><select size="1" name="sp_no">
-			<c:forEach var="sportVO" items="${sportSvc.all}">
-				<option value="${sportVO.sp_no}" ${(clubVO.sp_no==sportVO.sp_no)?'selected':'' } >${sportVO.sp_name}
-			</c:forEach>
-			</select>
-		</td>
+		<td><input type="TEXT" name="sp_no" size="45"	value="<%=clubVO.getSp_no()%>" /></td>
 	</tr>
 <!-- ----------------------------------------------------------------------------------------------------- -->
-	 
-	
 	<tr>
 		<td>照片:</td>
 		<td><input type="FILE" name="photo" size="45"	id="file01" /></td>
 	</tr>
 	<tr >
 		<td>照片預覽圖:</td>
-		<td><img src="<%=request.getContextPath()%>/clubImg.do?club_no=${clubVO.club_no}" id="photo" width="70%"/></td>
+		<td><img src="<%=request.getContextPath()%>/clubImg.do?club_no=${clubVO.club_no}"  width="70%"/></td>
 	</tr>
-	
 <!-- ----------------------------------------------------------------------------------------------------- -->
 	<tr>
 		<td>照片副檔名:</td>
@@ -104,12 +93,7 @@
 	</tr>
 	<tr>
 		<td>社團狀態:</td>
-		<td>
-		<select name="club_status">
-		<option value="正常" ${(clubVO.club_status=='正常')?'selected':''}>正常</option>
-		<option value="封鎖" ${(clubVO.club_status=='封鎖')?'selected':''}>封鎖</option>
-		</select>
-		</td>
+		<td><input type="TEXT" name="club_status" size="45"	value="<%=clubVO.getClub_status()%>" /></td>
 	</tr>
 	<tr>
 		<td>社團名稱:</td>
@@ -126,44 +110,6 @@
 <input type="hidden" name="action" value="update">
 <input type="hidden" name="club_no" value="<%=clubVO.getClub_no()%>">
 <input type="submit" value="送出修改"></FORM>
-<script src="https://code.jquery.com/jquery.js"></script>	
-	
-<script type="text/javascript"> 
-// 		document.getElementById("display").style.display = 'none';
-// 	    $(function() {  //將圖片預覽
-// 	    	$('input[type=file]').change(function() {
-// 	      	var input = $(this);
-// 	      	document.getElementById("preset").style.display = 'none';
-// 	      	document.getElementById("display").style.display = 'block';
-// 	      	if(!!this.files && !!this.files[0]) {
-// 	        	var reader = new FileReader();
-// 	          reader.onload = function(e) {
-// 	          	$('#pre' + input.prop('id').substr(4,2)).prop('src', e.target.result);
-// 	          }
-// 	          reader.readAsDataURL(this.files[0]);
-// 	        }
-// 	      });
-// 	    });
-
-$(document).ready(function(){
-	$("file01").change(function(){
-		readURL(this);
-	});
-	function readURL(input){
-		if(input.files && input.files[0]){
-			var reader = new FileReader();
-			reader.onload = function(e){
-				var photo = document.getElementById("photo");
-				photo.src = e.target.result;
-			}
-			reader.readAsDataURL(input.files[0]);
-		}
-	}
-});
-//******************************************
-    
-	    
-</script>
 </body>
 
 

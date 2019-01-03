@@ -1,4 +1,4 @@
-package com.club.model;
+package com.post_info.model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,7 +13,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-public class ClubDAO  implements ClubDAO_interface{
+public class Post_infoDAO  implements Post_infoDAO_interface{
 	private static DataSource ds = null;
 	static {
 		try {
@@ -25,24 +25,24 @@ public class ClubDAO  implements ClubDAO_interface{
 	}
 	
 		@Override
-	public List<ClubVO> getAll(Map<String, String[]> map) {
+	public List<Post_infoVO> getAll(Map<String, String[]> map) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 
 		private static final String INSERT_STMT = 
-			"INSERT INTO club (club_no,sp_no,photo,photo_ext,club_status,club_name,club_intro) VALUES (('C'||LPAD(to_char(club_seq.NEXTVAL), 4, '0')), ?, ?, ?, ?, ?, ?)";
+			"INSERT INTO post_info (post_no,club_no,mem_no,post_topic,post_content,post_date) VALUES (('P'||LPAD(to_char(post_info_seq.NEXTVAL), 4, '0')), ?, ?, ?, ?, ?)";
 		private static final String GET_ALL_STMT = 
-			"SELECT club_no,sp_no,photo,photo_ext,club_status,club_name,club_intro FROM club order by club_no";
+			"SELECT post_no,club_no,mem_no,post_topic,post_content,post_date FROM post_info order by post_no";
 		private static final String GET_ONE_STMT = 
-			"SELECT club_no,sp_no,photo,photo_ext,club_status,club_name,club_intro FROM club where club_no = ?";
+			"SELECT post_no,club_no,mem_no,post_topic,post_content,post_date FROM post_info where post_no = ?";
 		private static final String UPDATE = 
-			"UPDATE club set sp_no=?, photo=?, photo_ext=?, club_status=?, club_name=?, club_intro=? where club_no = ?";
+			"UPDATE post_info set post_no=?, club_no=?, mem_no=?, post_topic=?, post_content=?, post_date=? where post__no = ?";
 		
 		
 		@Override
-		public void insert(ClubVO clubVO) {
+		public void insert(Post_infoVO post_infoVO) {
 			Connection con = null;
 			PreparedStatement pstmt = null;
 			
@@ -50,12 +50,12 @@ public class ClubDAO  implements ClubDAO_interface{
 				con = ds.getConnection();
 				pstmt = con.prepareStatement(INSERT_STMT);
 				
-				pstmt.setString(1, clubVO.getSp_no());
-				pstmt.setBytes (2, clubVO.getPhoto());
-				pstmt.setString(3, clubVO.getPhoto_ext());
-				pstmt.setString(4, clubVO.getClub_status());
-				pstmt.setString(5, clubVO.getClub_name());
-				pstmt.setString(6, clubVO.getClub_intro());
+				
+				pstmt.setString (1, post_infoVO.getClub_no());
+				pstmt.setString(2, post_infoVO.getMem_no());
+				pstmt.setString(3, post_infoVO.getPost_topic());
+				pstmt.setString(4, post_infoVO.getPost_content());
+				pstmt.setTimestamp(5, post_infoVO.getPost_date());
 				
 				pstmt.executeUpdate();
 				
@@ -83,7 +83,7 @@ public class ClubDAO  implements ClubDAO_interface{
 		
 		
 		@Override
-		public void update(ClubVO clubVO) {
+		public void update(Post_infoVO post_infoVO) {
 			Connection con = null;
 			PreparedStatement pstmt = null;
 			
@@ -91,13 +91,13 @@ public class ClubDAO  implements ClubDAO_interface{
 				con = ds.getConnection();
 				pstmt = con.prepareStatement(UPDATE);
 				
-				pstmt.setString(1, clubVO.getSp_no());
-				pstmt.setBytes (2, clubVO.getPhoto());
-				pstmt.setString(3, clubVO.getPhoto_ext());
-				pstmt.setString(4, clubVO.getClub_status());
-				pstmt.setString(5, clubVO.getClub_name());
-				pstmt.setString(6, clubVO.getClub_intro());
-				pstmt.setString(7, clubVO.getClub_no());
+				pstmt.setString(1, post_infoVO.getPost_no());
+				pstmt.setString (2, post_infoVO.getClub_no());
+				pstmt.setString(3, post_infoVO.getMem_no());
+				pstmt.setString(4, post_infoVO.getPost_topic());
+				pstmt.setString(5, post_infoVO.getPost_content());
+				pstmt.setTimestamp(6, post_infoVO.getPost_date());
+				
 				
 				pstmt.executeUpdate();
 			} catch (SQLException se) {
@@ -125,9 +125,9 @@ public class ClubDAO  implements ClubDAO_interface{
 			
 		
 		@Override
-		public ClubVO findByPrimaryKey(String club_no) {
+		public Post_infoVO findByPrimaryKey(String post_no) {
 
-			ClubVO clubVO = null;
+			Post_infoVO post_infoVO = null;
 			Connection con = null;
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
@@ -135,20 +135,19 @@ public class ClubDAO  implements ClubDAO_interface{
 			try {
 				con = ds.getConnection();
 				pstmt = con.prepareStatement(GET_ONE_STMT);
-				pstmt.setString(1, club_no);
+				pstmt.setString(1, post_no);
 				
 				rs = pstmt.executeQuery();
 				
 				while (rs.next()) {
-					clubVO = new ClubVO();
-					clubVO.setClub_no(rs.getString("club_no"));
-					clubVO.setSp_no(rs.getString("sp_no"));
-					clubVO.setPhoto(rs.getBytes("photo"));
-					clubVO.setPhoto_ext(rs.getString("photo_ext"));
-					clubVO.setClub_status(rs.getString("club_status"));
-					clubVO.setClub_name(rs.getString("club_name"));
-					clubVO.setClub_intro(rs.getString("club_intro"));
-				
+					post_infoVO = new Post_infoVO();
+					post_infoVO.setPost_no(rs.getString("post_no"));
+					post_infoVO.setClub_no(rs.getString("club_no"));
+					post_infoVO.setMem_no(rs.getString("mem_no"));
+					post_infoVO.setPost_topic(rs.getString("post_topic"));
+					post_infoVO.setPost_content(rs.getString("post_content"));
+					post_infoVO.setPost_date(rs.getTimestamp("post_date"));
+					
 				}
 				
 			} catch (SQLException se) {
@@ -177,14 +176,14 @@ public class ClubDAO  implements ClubDAO_interface{
 					}
 				}
 			}
-			return clubVO;
+			return post_infoVO;
 		}
 		
 		
 		@Override
-		public List<ClubVO> getAll() {
-			List<ClubVO> list = new ArrayList<ClubVO>();
-			ClubVO clubVO = null;
+		public List<Post_infoVO> getAll() {
+			List<Post_infoVO> list = new ArrayList<Post_infoVO>();
+			Post_infoVO post_infoVO = null;
 			
 			Connection con = null;
 			PreparedStatement pstmt = null;
@@ -195,15 +194,15 @@ public class ClubDAO  implements ClubDAO_interface{
 				pstmt = con.prepareStatement(GET_ALL_STMT);
 				rs = pstmt.executeQuery();
 				while(rs.next()) {
-					clubVO = new ClubVO();
-					clubVO.setClub_no(rs.getString("club_no"));
-					clubVO.setSp_no(rs.getString("sp_no"));
-					clubVO.setPhoto(rs.getBytes("photo"));
-					clubVO.setPhoto_ext(rs.getString("photo_ext"));
-					clubVO.setClub_status(rs.getString("club_status"));
-					clubVO.setClub_name(rs.getString("club_name"));
-					clubVO.setClub_intro(rs.getString("club_intro"));
-					list.add(clubVO);
+					post_infoVO = new Post_infoVO();
+					post_infoVO.setPost_no(rs.getString("post_no"));
+					post_infoVO.setClub_no(rs.getString("club_no"));
+					post_infoVO.setMem_no(rs.getString("mem_no"));
+					post_infoVO.setPost_topic(rs.getString("post_topic"));
+					post_infoVO.setPost_content(rs.getString("post_content"));
+					post_infoVO.setPost_date(rs.getTimestamp("post_date"));
+					
+					list.add(post_infoVO);
 				}
 			
 			} catch (SQLException se) {
@@ -233,6 +232,13 @@ public class ClubDAO  implements ClubDAO_interface{
 				}
 			}
 			return list;
+		}
+
+
+		@Override
+		public void delete(String post_no) {
+			// TODO Auto-generated method stub
+			
 		}
 }
 		

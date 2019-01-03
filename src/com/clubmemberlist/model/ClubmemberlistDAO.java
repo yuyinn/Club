@@ -1,0 +1,301 @@
+package com.clubmemberlist.model;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import javax.naming.Context;
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
+
+
+public class ClubmemberlistDAO  implements ClubmemberlistDAO_interface{
+	private static DataSource ds = null;
+	static {
+		try {
+			Context ctx = new InitialContext();
+			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/CA105G1");
+		} catch (NamingException e) {
+			e.printStackTrace();
+		}
+	}
+	
+		
+		private static final String INSERT_STMT = 
+			"INSERT INTO clubmemberlist (club_no,mem_no,cmem_status,cmem_class,silence_time) VALUES (?, ?, ?, ?, ?)";
+		private static final String GET_ALL_STMT = 
+			"SELECT club_no,mem_no,cmem_status,cmem_class,silence_time FROM clubmemberlist order by club_no=? && mem_no=?";
+		private static final String GET_ONE_STMT = 
+			"SELECT club_no,mem_no,cmem_status,cmem_class,silence_time FROM clubmemberlist where club_no=? && mem_no=?";
+		private static final String UPDATE = 
+			"UPDATE clubmemberlist set club_no=?, mem_no=?, cmem_status=?, cmem_class=?, silence_time=?  where club_no=? && mem_no=?";
+		
+		
+		@Override
+		public void insert(ClubmemberlistVO clubmemberlistVO) {
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			
+			try {
+				con = ds.getConnection();
+				pstmt = con.prepareStatement(INSERT_STMT);
+				
+				pstmt.setString(1, clubmemberlistVO.getClub_no());
+				pstmt.setString (2, clubmemberlistVO.getMem_no());
+				pstmt.setString(3, clubmemberlistVO.getCmem_status());
+				pstmt.setString(4, clubmemberlistVO.getCmem_class());
+				pstmt.setTimestamp(5, clubmemberlistVO.getSilence_time());
+				
+				
+				pstmt.executeUpdate();
+				
+			} catch (SQLException se) {
+				throw new RuntimeException("A database error occured. "
+						+ se.getMessage());
+				// Clean up JDBC resources
+			} finally {
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}
+		}
+		
+		
+		@Override
+		public void update(ClubmemberlistVO clubmemberlistVO) {
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			
+			try {
+				con = ds.getConnection();
+				pstmt = con.prepareStatement(UPDATE);
+				
+				pstmt.setString(1, clubmemberlistVO.getClub_no());
+				pstmt.setString (2, clubmemberlistVO.getMem_no());
+				pstmt.setString(3, clubmemberlistVO.getCmem_status());
+				pstmt.setString(4, clubmemberlistVO.getCmem_class());
+				pstmt.setTimestamp(5, clubmemberlistVO.getSilence_time());
+				
+				pstmt.executeUpdate();
+			} catch (SQLException se) {
+				throw new RuntimeException("A database error occured. "
+						+ se.getMessage());
+				// Clean up JDBC resources
+			} finally {
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}
+		}
+		
+			
+		
+		@Override
+		public ClubmemberlistVO findByPrimaryKey(String club_no,String mem_no) {
+
+			ClubmemberlistVO clubmemberlistVO = null;
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			
+			try {
+				con = ds.getConnection();
+				pstmt = con.prepareStatement(GET_ONE_STMT);
+				pstmt.setString(1, club_no);
+				pstmt.setString(2, mem_no);
+				
+				rs = pstmt.executeQuery();
+				
+				while (rs.next()) {
+					clubmemberlistVO = new ClubmemberlistVO();
+					
+					clubmemberlistVO.setClub_no(rs.getString("club_no"));
+					clubmemberlistVO.setMem_no(rs.getString("mem_no"));
+					clubmemberlistVO.setCmem_status(rs.getString("cmem_status"));
+					clubmemberlistVO.setCmem_class(rs.getString("cmem_class"));
+					clubmemberlistVO.setSilence_time(rs.getTimestamp("silence_time"));
+				
+				}
+				
+			} catch (SQLException se) {
+				throw new RuntimeException("A database error occured. "
+						+ se.getMessage());
+			} finally {
+				if (rs != null) {
+					try {
+						rs.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}
+			return clubmemberlistVO;
+		}
+		
+		
+		@Override
+		public List<ClubmemberlistVO> getAll() {
+			List<ClubmemberlistVO> list = new ArrayList<ClubmemberlistVO>();
+			ClubmemberlistVO clubmemberlistVO = null;
+			
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			
+			try {
+				con = ds.getConnection();
+				pstmt = con.prepareStatement(GET_ALL_STMT);
+				rs = pstmt.executeQuery();
+				while(rs.next()) {
+					clubmemberlistVO = new ClubmemberlistVO();
+					clubmemberlistVO.setClub_no(rs.getString("club_no"));
+					clubmemberlistVO.setMem_no(rs.getString("mem_no"));
+					clubmemberlistVO.setCmem_status(rs.getString("cmem_status"));
+					clubmemberlistVO.setCmem_class(rs.getString("cmem_class"));
+					clubmemberlistVO.setSilence_time(rs.getTimestamp("silence_time"));
+					list.add(clubmemberlistVO);
+				}
+			
+			} catch (SQLException se) {
+				throw new RuntimeException("A database error occured. "
+						+ se.getMessage());
+			}finally {
+				if (rs != null) {
+					try {
+						rs.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+			}
+			return list;
+		}
+
+
+		@Override
+		public List<ClubmemberlistVO> getAll(Map<String, String[]> map) {
+			List<ClubmemberlistVO> list = new ArrayList<ClubmemberlistVO>();
+			ClubmemberlistVO clubmemberlistVO = null;
+		
+			Connection con = null;
+			PreparedStatement pstmt = null;
+			ResultSet rs = null;
+			
+
+			try {
+				
+				con = ds.getConnection();
+				String finalSQL = "select * from emp2 "
+			          + CompositeQuery_Clubmemberlist.get_WhereCondition(map)
+			          + "order by empno";
+				pstmt = con.prepareStatement(finalSQL);
+				System.out.println("●●finalSQL(by DAO) = "+finalSQL);
+				rs = pstmt.executeQuery();
+		
+				while (rs.next()) {
+					clubmemberlistVO = new ClubmemberlistVO();
+					clubmemberlistVO.setClub_no(rs.getString("club_no"));
+					clubmemberlistVO.setMem_no(rs.getString("mem_no"));
+					clubmemberlistVO.setCmem_status(rs.getString("cmem_status"));
+					clubmemberlistVO.setCmem_class(rs.getString("cmem_class"));
+					clubmemberlistVO.setSilence_time(rs.getTimestamp("silence_time"));
+					
+					list.add(clubmemberlistVO); // Store the row in the List
+				}
+		
+				// Handle any SQL errors
+			} catch (SQLException se) {
+				throw new RuntimeException("A database error occured. "
+						+ se.getMessage());
+			} finally {
+				if (rs != null) {
+					try {
+						rs.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (pstmt != null) {
+					try {
+						pstmt.close();
+					} catch (SQLException se) {
+						se.printStackTrace(System.err);
+					}
+				}
+				if (con != null) {
+					try {
+						con.close();
+					} catch (Exception e) {
+						e.printStackTrace(System.err);
+					}
+				}
+			}
+			return list;
+		}
+
+
+
+	
+		
+
+}
+		
+		
+	
+

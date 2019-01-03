@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.club.model.ClubVO;
 
@@ -115,45 +116,45 @@ public class ClubmemberlistJDBCDAO implements ClubmemberlistDAO_interface{
 		
 	}
 
-	@Override
-	public void delete(String club_no, String mem_no) {
-		Connection con = null;
-		PreparedStatement pstmt = null;
-		
-		try {
-			Class.forName(driver);
-			con = DriverManager.getConnection(url, userid, passwd);
-			pstmt = con.prepareStatement(DELETE);
-			
-			pstmt.setString(1, club_no);
-			pstmt.setString(2, mem_no);
-			
-			pstmt.executeUpdate();
-			
-		} catch (ClassNotFoundException e) {
-			throw new RuntimeException("Couldn't load database driver. "
-					+ e.getMessage());
-		} catch (SQLException se) {
-			throw new RuntimeException("A database error occured. "
-					+ se.getMessage());
-		}finally {
-			if (pstmt != null) {
-				try {
-					pstmt.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-			if (con != null) {
-				try {
-					con.close();
-				} catch (SQLException se) {
-					se.printStackTrace(System.err);
-				}
-			}
-		}
-		
-	}
+//	@Override
+//	public void delete(String club_no, String mem_no) {
+//		Connection con = null;
+//		PreparedStatement pstmt = null;
+//		
+//		try {
+//			Class.forName(driver);
+//			con = DriverManager.getConnection(url, userid, passwd);
+//			pstmt = con.prepareStatement(DELETE);
+//			
+//			pstmt.setString(1, club_no);
+//			pstmt.setString(2, mem_no);
+//			
+//			pstmt.executeUpdate();
+//			
+//		} catch (ClassNotFoundException e) {
+//			throw new RuntimeException("Couldn't load database driver. "
+//					+ e.getMessage());
+//		} catch (SQLException se) {
+//			throw new RuntimeException("A database error occured. "
+//					+ se.getMessage());
+//		}finally {
+//			if (pstmt != null) {
+//				try {
+//					pstmt.close();
+//				} catch (SQLException se) {
+//					se.printStackTrace(System.err);
+//				}
+//			}
+//			if (con != null) {
+//				try {
+//					con.close();
+//				} catch (SQLException se) {
+//					se.printStackTrace(System.err);
+//				}
+//			}
+//		}
+//		
+//	}
 
 	@Override
 	public ClubmemberlistVO findByPrimaryKey(String club_no, String mem_no) {
@@ -316,5 +317,13 @@ public class ClubmemberlistJDBCDAO implements ClubmemberlistDAO_interface{
 //			System.out.println();
 //		}
 	}
+
+	@Override
+	public List<ClubmemberlistVO> getAll(Map<String, String[]> map) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
 
 }

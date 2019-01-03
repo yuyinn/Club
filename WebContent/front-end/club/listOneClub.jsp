@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="Big5"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page import="com.club.model.*"%>
 
@@ -49,7 +49,7 @@
 <!-- <!-----fb like-----> 
 
 
-
+	
 
 	<%@ include file="/front-end/CA105G1_header.file" %>
 	
@@ -59,14 +59,14 @@
 <!-- 					<div class="row"> -->
 						<div class="col-xs-12 col-lg-2">
 							<div class="list-group active">
-<!---------------------------------------------------å»ºç«‹ç¤¾åœ˜------------------------------------------------------------------>
-							<a href="#" class="list-group-item" data-toggle="modal" data-target="#clubModalLong">å»ºç«‹ç¤¾åœ˜</a>
+<!---------------------------------------------------«Ø¥ßªÀ¹Î------------------------------------------------------------------>
+							<a href="#" class="list-group-item" data-toggle="modal" data-target="#clubModalLong">«Ø¥ßªÀ¹Î</a>
 <!-------------- Modal ------------>
 <div class="modal fade" id="clubModalLong" tabindex="-1" role="dialog" aria-labelledby="clubModalLongTitle" aria-hidden="true">
   <div class="modal-dialog  .modal-dialog-centered " role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title" id="clubModalLongTitle">å»ºç«‹ç¤¾åœ˜</h4>
+        <h4 class="modal-title" id="clubModalLongTitle">«Ø¥ßªÀ¹Î</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -83,14 +83,14 @@
 						<br>
 
 						<div class="form-group">
-							<label class="club_name" >ç¤¾åœ˜åç¨±</label>
+							<label class="club_name" >ªÀ¹Î¦WºÙ</label>
 							<input type="text" name="club_name" id="club_name" class="form-control">
 						</div>
 						<br>
 						<br>
 				<jsp:useBean id="sportSvc" scope="page" class="com.sport.model.SportService" />
 						<div class="form-group">
-							<label class="sport" >é‹å‹•é …ç›®</label>
+							<label class="sport" >¹B°Ê¶µ¥Ø</label>
 							<select name="sport" id="sport" class="form-control">
 								<c:forEach var="sportVO" items="${sportSvc.all}">
 								<option value="${sportVO.sp_no}" ${(clubVO.sp_no==sportVO.sp_no)?'selected':'' } >${sportVO.sp_name}
@@ -102,7 +102,7 @@
 
 						<div class="form-group">
 							
-							<label class="club_intro">ç¤¾åœ˜ç°¡ä»‹</label>
+							<label class="club_intro">ªÀ¹ÎÂ²¤¶</label>
 							<textarea name="club_intro" id="club_intro" class="form-control" ROWS=10 ></textarea>	
 						</div>
 						<br>
@@ -112,8 +112,8 @@
       </div>
       <div class="modal-footer">
       	<input type="hidden" name="action" value="insert">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">é—œé–‰</button>
-        <button type="submit" class="btn btn-primary">é€å‡º</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Ãö³¬</button>
+        <button type="submit" class="btn btn-primary">°e¥X</button>
       </div>
       </FORM>
     </div>
@@ -121,27 +121,23 @@
 </div>
 
 <!------------ Modal ------------>
-<!-----------------------------------------------------å»ºç«‹ç¤¾åœ˜------------------------------------------------------------------>
-							<a href="#" class="list-group-item">ç¤¾åœ˜ç®¡ç†</a>
-							<a href="#" class="list-group-item">å½±éŸ³ç›¸ç°¿</a>
-							<a href="#" class="list-group-item">æ–‡ç« </a>
-							<a href="<%= request.getContextPath()%>/front-end/club/club_list.jsp" display="none" id="linkBack">å›åˆ°ç¤¾åœ˜åˆ—è¡¨</a>
+<!-----------------------------------------------------«Ø¥ßªÀ¹Î------------------------------------------------------------------>
+							<a href="#" class="list-group-item">ªÀ¹ÎºŞ²z</a>
+							<a href="#" class="list-group-item">¼v­µ¬ÛÃ¯</a>
+							<a href="#" class="list-group-item">¤å³¹</a>
+							<a href="<%= request.getContextPath()%>/front-end/club/club_list.jsp" display="none" id="linkBack">¦^¨ìªÀ¹Î¦Cªí</a>
 							</div>
 						</div>
 						
 		<div class="container">
  			<div class="col-xs-12 col-sm-9"> 
 				<div class="container">
-					<img src="https://api.fnkr.net/testimg/350x200/00CED1/FFF/?text=img+placeholder" class="img-reponsive" width=70%>	
+<!-- 					<img src="https://api.fnkr.net/testimg/350x200/00CED1/FFF/?text=img+placeholder" class="img-reponsive" width=50%>	 -->
+				
 				</div>
-				<br>
-				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-				tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-				quisminim veniam,quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-				cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-				proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-				</p>
+				
+					
+				
 <!-----fb like--->
 <!-- <div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-layout="button" data-action="like" data-size="large" data-show-faces="false" data-share="false"></div> -->
 <!-----fb like--->

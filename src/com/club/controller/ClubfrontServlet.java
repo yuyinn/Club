@@ -23,10 +23,10 @@ import com.club.model.ClubVO;
 
 
 @MultipartConfig(fileSizeThreshold=1024*1024, maxFileSize=5*1024*1024, maxRequestSize=5*5*1024*1024)
-public class ClubServlet extends HttpServlet {
+public class ClubfrontServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	public ClubServlet(){
+	public ClubfrontServlet(){
 		super();
 	}
 	
@@ -39,9 +39,10 @@ public class ClubServlet extends HttpServlet {
 			throws ServletException, IOException {
 
 		req.setCharacterEncoding("UTF-8");
-		String action = req.getParameter("action");
+		String actionfront = req.getParameter("actionfront");
+		System.out.println(actionfront);
 		
-if ("getOne_For_Display".equals(action)) { // 來自select_page.jsp的請求
+if ("getOne_For_Display".equals(actionfront)) { 
 
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
@@ -54,9 +55,9 @@ if ("getOne_For_Display".equals(action)) { // 來自select_page.jsp的請求
 				}
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("front-end/club/select_page.jsp");
+							.getRequestDispatcher("front-end/club/clublist.jsp");
 					failureView.forward(req, res);
-					return;//程式中斷
+					return;
 				}
 				
 				String club_no = null;
@@ -67,20 +68,20 @@ if ("getOne_For_Display".equals(action)) { // 來自select_page.jsp的請求
 				}
 				
 				
-				// Send the use back to the form, if there were errors
+				
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("front-end/club/select_page.jsp");
+							.getRequestDispatcher("front-end/club/clublist.jsp");
 					failureView.forward(req, res);
-					return;//程式中斷
+					return;
 				}
 				
-				// Send the use back to the form, if there were errors
+				
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("front-end/club/select_page.jsp");
+							.getRequestDispatcher("front-end/club/clublist.jsp");
 					failureView.forward(req, res);
-					return;//程式中斷
+					return;
 				}
 				/***************************2.開始查詢資料*****************************************/
 				ClubService clubSvc = new ClubService();
@@ -88,17 +89,17 @@ if ("getOne_For_Display".equals(action)) { // 來自select_page.jsp的請求
 				if (clubVO == null) {
 					errorMsgs.add("查無資料");
 				}
-				// Send the use back to the form, if there were errors
+				
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("front-end/club/select_page.jsp");
+							.getRequestDispatcher("front-end/club/clublist.jsp");
 					failureView.forward(req, res);
 					return;//程式中斷
 				}
 				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
-				req.setAttribute("clubVO", clubVO); // 資料庫取出的empVO物件,存入req
+				req.setAttribute("clubVO", clubVO); 
 				String url = "front-end/club/listOneClub.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // 成功轉交 listOneEmp.jsp
+				RequestDispatcher successView = req.getRequestDispatcher(url); 
 				successView.forward(req, res);
 
 				/***************************其他可能的錯誤處理*************************************/
@@ -111,9 +112,35 @@ if ("getOne_For_Display".equals(action)) { // 來自select_page.jsp的請求
 		}
 		
 		
- 
+if ("getOne_For_Update".equals(actionfront)) { 
+
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			
+			try {
+				/***************************1.接收請求參數****************************************/
+				String club_no = req.getParameter("club_no");
+				
+				/***************************2.開始查詢資料****************************************/
+				ClubService clubSvc = new ClubService();
+				ClubVO clubVO = clubSvc.getOneClub(club_no);
+								
+				/***************************3.查詢完成,準備轉交(Send the Success view)************/
+				req.setAttribute("clubVO", clubVO);       
+				String url = "front-end/club/update_club_input.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);
+				successView.forward(req, res);
+				/***************************其他可能的錯誤處理**********************************/
+			} catch (Exception e) {
+				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("front-end/club/listAllClub.jsp");
+				failureView.forward(req, res);
+			}
+		}
 		
-if ("update".equals(action)) { // 來自update_emp_input.jsp的請求
+		
+if ("update".equals(actionfront)) { // 來自update_emp_input.jsp的請求
 			
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
@@ -132,16 +159,19 @@ if ("update".equals(action)) { // 來自update_emp_input.jsp的請求
 	            }
 				
 				
-				Part filePart = req.getPart("photo");
-				/***如果沒有修改則回到前一頁****/
-				if(filePart.getSubmittedFileName().equals("")||filePart.getSubmittedFileName().trim().length()==0) {
-					RequestDispatcher failureView = req
-							.getRequestDispatcher("front-end/club/listAllClub.jsp");
-					failureView.forward(req, res);
-					return; //程式中斷
+				byte[] photo = null;
+				Part part = req.getPart("photo");
+				if (getFileNameFromPart(part) != null) {
+					InputStream in = part.getInputStream();
+					photo = new byte[in.available()];
+					in.read(photo);
+				}else {
+					InputStream is = getServletContext().getResourceAsStream("/img/no-image.PNG");
+					photo = new byte[is.available()];
+					is.read(photo);
+					is.close();
 				}
-				InputStream fileContent = filePart.getInputStream();
-				byte[] photo = readFully(fileContent);
+				
 				
 //				byte[] photo = null;
 //				Part part = req.getPart("photo");
@@ -157,16 +187,6 @@ if ("update".equals(action)) { // 來自update_emp_input.jsp的請求
 //				}
 				
 				
-				String photo_ext = req.getParameter("photo_ext").trim();
-				if (photo_ext == null || photo_ext.trim().length() == 0) {
-					errorMsgs.add("照片副檔名請勿空白");
-				}
-				
-				String club_status = req.getParameter("club_status").trim();
-				if (club_status == null || club_status.trim().length() == 0) {
-					errorMsgs.add("社團狀態請勿空白");
-				}	
-				
 
 				String club_name = req.getParameter("club_name").trim();
 				if (club_name == null || club_name.trim().length() == 0) {
@@ -177,7 +197,10 @@ if ("update".equals(action)) { // 來自update_emp_input.jsp的請求
 				if (club_intro == null || club_intro.trim().length() == 0) {
 					errorMsgs.add("社團簡介請勿空白");
 				}	
-
+				
+				String photo_ext = req.getParameter("photo_ext").trim();
+				String club_status = req.getParameter("cliub_status").trim();
+				
 				ClubVO clubVO = new ClubVO();
 				clubVO.setClub_no(club_no);
 				clubVO.setSp_no(sp_no);
@@ -191,7 +214,7 @@ if ("update".equals(action)) { // 來自update_emp_input.jsp的請求
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("clubVO", clubVO); // 含有輸入格式錯誤的empVO物件,也存入req
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("front-end/club/update_club_input.jsp");
+							.getRequestDispatcher("/front-end/club/update_club_input.jsp");
 					failureView.forward(req, res);
 					return; //程式中斷
 				}
@@ -201,18 +224,8 @@ if ("update".equals(action)) { // 來自update_emp_input.jsp的請求
 				clubVO = clubSvc.updateClub(club_no, sp_no,photo, photo_ext, club_status, club_name,club_intro);
 				
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
+				req.setAttribute("ClubVo", clubVO);
 				
-//				SportService sportSvc = new SportService();
-//				if(requestURL.equals("/sport/listEmps_ByDeptno.jsp") || requestURL.equals("/dept/listAllDept.jsp"))
-//					req.setAttribute("listEmps_ByDeptno",deptSvc.getEmpsByDeptno(deptno)); // 資料庫取出的list物件,存入request
-				
-				if(requestURL.equals("/club/listEmps_ByCompositeQuery.jsp")){
-					HttpSession session = req.getSession();
-					Map<String, String[]> map = (Map<String, String[]>)session.getAttribute("map");
-					List<ClubVO> list  = clubSvc.getAll(map);
-					req.setAttribute("listEmps_ByCompositeQuery",list); //  複合查詢, 資料庫取出的list物件,存入request
-				}
-                
 				String url = requestURL;
 				RequestDispatcher successView = req.getRequestDispatcher(url);   // 修改成功後,轉交回送出修改的來源網頁
 				successView.forward(req, res);
@@ -227,15 +240,15 @@ if ("update".equals(action)) { // 來自update_emp_input.jsp的請求
 			}
 		}
 
-if ("insert".equals(action)) { // 來自addEmp.jsp的請求  
-			
+if ("insert".equals(actionfront)) { 
+	System.out.println("哈囉我在這");
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
 				/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
 //				String club_no = req.getParameter("club_no").trim();
-					
+				
 				String sp_no = req.getParameter("sport");
 				String sp_noReg = "^[(A-Z0-9_)]{5,7}$";
 				if (sp_no == null || sp_no.trim().length() == 0) {
@@ -244,23 +257,23 @@ if ("insert".equals(action)) { // 來自addEmp.jsp的請求
 					errorMsgs.add("運動項目編號: 只能是英文字母、數字和_ , 且長度必需在5到7之間");
 	            }
 				
-				Part filePart = req.getPart("photo");
-				if(filePart.getSubmittedFileName().equals("")||filePart.getSubmittedFileName().trim().length()==0) {
-					errorMsgs.add("照片請勿空白");
+				byte[] photo = null;
+				Part part = req.getPart("photo");
+				if (getFileNameFromPart(part) != null) {
+					InputStream in = part.getInputStream();
+					photo = new byte[in.available()];
+					in.read(photo);
+				}else {
+					InputStream is = getServletContext().getResourceAsStream("/img/no-image.PNG");
+					photo = new byte[is.available()];
+					is.read(photo);
+					is.close();
 				}
-				InputStream fileContent = filePart.getInputStream();
-				byte[] photo = readFully(fileContent);
 				
-				String photo_ext = req.getParameter("photo_ext");
-				if (photo_ext == null || photo_ext.trim().length() == 0) {
-					photo_ext="";
-//					errorMsgs.add("照片副檔名請勿空白");
-				}
-				System.out.println("photo_ext"+photo_ext);
+				
 				String club_status = req.getParameter("club_status").trim();
 				if (club_status == null || club_status.trim().length() == 0) {
-					club_status = "";
-//					errorMsgs.add("社團狀態請勿空白");
+					errorMsgs.add("社團狀態請勿空白");
 				}	
 				
 				
@@ -268,13 +281,18 @@ if ("insert".equals(action)) { // 來自addEmp.jsp的請求
 				if (club_name == null || club_name.trim().length() == 0) {
 					errorMsgs.add("社團名稱請勿空白");
 				}	
-
+				
 				String club_intro = req.getParameter("club_intro").trim();
 				if (club_intro == null || club_intro.trim().length() == 0) {
 					errorMsgs.add("社團簡介請勿空白");
 				}	
 				
+				String photo_ext = req.getParameter("photo_ext").trim();
 				
+				
+				
+				
+	
 				ClubVO clubVO = new ClubVO();
 				clubVO.setSp_no(sp_no);
 				clubVO.setPhoto(photo);
@@ -282,11 +300,13 @@ if ("insert".equals(action)) { // 來自addEmp.jsp的請求
 				clubVO.setClub_status(club_status);
 				clubVO.setClub_name(club_name);
 				clubVO.setClub_intro(club_intro);
-				System.out.println(clubVO+"test");
+				
+				
+				
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("clubVO", clubVO);// 含有輸入格式錯誤的empVO物件,也存入req
-					System.out.println("有錯喔");
+//					req.setAttribute("clubVO", clubVO);// 含有輸入格式錯誤的empVO物件,也存入req
+					
 					RequestDispatcher failureView = req
 							.getRequestDispatcher("/front-end/club/club_list.jsp");
 					failureView.forward(req, res);
@@ -295,7 +315,7 @@ if ("insert".equals(action)) { // 來自addEmp.jsp的請求
 				
 				/***************************2.開始新增資料***************************************/
 				ClubService clubSvc = new ClubService();
-				clubVO = clubSvc.addClub(sp_no,photo,photo_ext, club_status, club_name, club_intro);
+				clubSvc.addClub(sp_no,photo,photo_ext, club_status, club_name, club_intro);
 				
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
 				String url = "/front-end/club/club_home.jsp";
@@ -304,10 +324,10 @@ if ("insert".equals(action)) { // 來自addEmp.jsp的請求
 				
 				/***************************其他可能的錯誤處理**********************************/
 			} catch (Exception e) {
+				e.printStackTrace();
 				errorMsgs.add(e.getMessage());
-				System.out.println("warning");
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("front-end/club/club_list.jsp");
+						.getRequestDispatcher("/front-end/club/club_list.jsp");
 				failureView.forward(req, res);
 			}
 		}
@@ -325,14 +345,14 @@ if ("insert".equals(action)) { // 來自addEmp.jsp的請求
 //		}
 //		return filename;
 //	}
-	public static byte[] readFully(InputStream input) throws IOException
-	{
-		ByteArrayOutputStream output = new ByteArrayOutputStream();
-		byte[] buffer = new byte[input.available()];
-		int bytesRead;
-		while ((bytesRead = input.read(buffer)) != -1){
-			output.write(buffer,0,bytesRead);
+	public String getFileNameFromPart(Part part) {
+		String header = part.getHeader("content-disposition");
+//		System.out.println("header=" + header); // 測試用
+		String filename = new File(header.substring(header.lastIndexOf("=") + 2, header.length() - 1)).getName();
+//		System.out.println("filename=" + filename); // 測試用
+		if (filename.length() == 0) {
+			return null;
 		}
-		return output.toByteArray();
+		return filename;
 	}
 }

@@ -1,6 +1,7 @@
 package com.club.model;
 
 import java.util.List;
+import java.util.Map;
 
 public class ClubService {
 
@@ -49,6 +50,10 @@ public class ClubService {
 	
 	public List<ClubVO> getAll(){
 		return dao.getAll();
+	}
+	
+	public List<ClubVO> getAll(Map<String, String[]> map) {
+		return dao.getAll(map);
 	}
 	
 }

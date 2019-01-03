@@ -61,12 +61,22 @@
   </servlet-mapping>
   
   <servlet>
+  	<servlet-name>ClubfrontServlet</servlet-name>
+  	<servlet-class>com.club.controller.ClubfrontServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>ClubfrontServlet</servlet-name>
+  	<url-pattern>/clubfront.do</url-pattern>
+  </servlet-mapping>
+  
+ 
+  <servlet>
   	<servlet-name>ClubImgServlet</servlet-name>
   	<servlet-class>com.club.controller.ClubImgServlet</servlet-class>
   </servlet>
   <servlet-mapping>
   	<servlet-name>ClubImgServlet</servlet-name>
-  	<url-pattern>/clubImg.do</url-pattern>
+  	<url-pattern>/club/clubImg.do</url-pattern>
   </servlet-mapping>
 
   <servlet>

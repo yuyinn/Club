@@ -8,6 +8,7 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class ClubJDBCDAO implements ClubDAO_interface{
 	String driver = "oracle.jdbc.driver.OracleDriver";
@@ -235,6 +236,14 @@ public class ClubJDBCDAO implements ClubDAO_interface{
 		return list;
 	}
 	
+	
+	
+	@Override
+	public List<ClubVO> getAll(Map<String, String[]> map) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	public static void main(String[] args) {
 		
 		ClubJDBCDAO dao = new ClubJDBCDAO();

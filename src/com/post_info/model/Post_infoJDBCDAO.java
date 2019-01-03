@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import com.club.model.ClubJDBCDAO;
 import com.club.model.ClubVO;
@@ -375,6 +376,11 @@ public class Post_infoJDBCDAO implements Post_infoDAO_interface{
 //			System.out.println(aPost_info.getPost_date()+ ",");
 //		    System.out.println();
 //			}
+		}
+		@Override
+		public List<Post_infoVO> getAll(Map<String, String[]> map) {
+			// TODO Auto-generated method stub
+			return null;
 		}
 		
 	
