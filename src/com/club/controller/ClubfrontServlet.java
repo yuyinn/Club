@@ -241,7 +241,7 @@ if ("update".equals(actionfront)) { // 來自update_emp_input.jsp的請求
 		}
 
 if ("insert".equals(actionfront)) { 
-	System.out.println("哈囉我在這");
+	
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 
@@ -270,13 +270,6 @@ if ("insert".equals(actionfront)) {
 					is.close();
 				}
 				
-				
-				String club_status = req.getParameter("club_status").trim();
-				if (club_status == null || club_status.trim().length() == 0) {
-					errorMsgs.add("社團狀態請勿空白");
-				}	
-				
-				
 				String club_name = req.getParameter("club_name").trim();
 				if (club_name == null || club_name.trim().length() == 0) {
 					errorMsgs.add("社團名稱請勿空白");
@@ -287,39 +280,33 @@ if ("insert".equals(actionfront)) {
 					errorMsgs.add("社團簡介請勿空白");
 				}	
 				
+				String club_status = req.getParameter("club_status").trim();
 				String photo_ext = req.getParameter("photo_ext").trim();
 				
+//				ClubVO clubVO = new ClubVO();
+//				clubVO.setSp_no(sp_no);
+//				clubVO.setPhoto(photo);
+//				clubVO.setPhoto_ext(photo_ext);
+//				clubVO.setClub_status(club_status);
+//				clubVO.setClub_name(club_name);
+//				clubVO.setClub_intro(club_intro);
 				
 				
-				
-	
-				ClubVO clubVO = new ClubVO();
-				clubVO.setSp_no(sp_no);
-				clubVO.setPhoto(photo);
-				clubVO.setPhoto_ext(photo_ext);
-				clubVO.setClub_status(club_status);
-				clubVO.setClub_name(club_name);
-				clubVO.setClub_intro(club_intro);
-				
-				
-				
-				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-//					req.setAttribute("clubVO", clubVO);// 含有輸入格式錯誤的empVO物件,也存入req
-					
 					RequestDispatcher failureView = req
 							.getRequestDispatcher("/front-end/club/club_list.jsp");
 					failureView.forward(req, res);
 					return;
 				}
-				
+				System.out.println("哈囉我在這");
 				/***************************2.開始新增資料***************************************/
 				ClubService clubSvc = new ClubService();
-				clubSvc.addClub(sp_no,photo,photo_ext, club_status, club_name, club_intro);
+				ClubVO clubVO = clubSvc.addClub(sp_no,photo,photo_ext, club_status, club_name, club_intro);
 				
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
-				String url = "/front-end/club/club_home.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
+				req.setAttribute("clubVO", clubVO);
+				String url = "/front-end/club/club_page.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url); 
 				successView.forward(req, res);				
 				
 				/***************************其他可能的錯誤處理**********************************/

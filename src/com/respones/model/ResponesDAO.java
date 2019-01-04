@@ -1,4 +1,4 @@
-package com.club.model;
+package com.respones.model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,7 +14,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-public class ClubDAO  implements ClubDAO_interface{
+public class ResponesDAO  implements ResponesDAO_interface{
 	private static DataSource ds = null;
 	static {
 		try {
@@ -26,25 +26,24 @@ public class ClubDAO  implements ClubDAO_interface{
 	}
 	
 		@Override
-	public List<ClubVO> getAll(Map<String, String[]> map) {
+	public List<ResponesVO> getAll(Map<String, String[]> map) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 
 		private static final String INSERT_STMT = 
-			"INSERT INTO club (club_no,sp_no,photo,photo_ext,club_status,club_name,club_intro) "
-			+ "VALUES (('C'||LPAD(to_char(club_seq.NEXTVAL), 4, '0')), ?, ?, ?, ?, ?, ?)";
+			"INSERT INTO respones (res_no,post_no,mem_no,res_content,res_date) VALUES (('R'||LPAD(to_char(club_seq.NEXTVAL), 4, '0')), ?, ?, ?, ?)";
 		private static final String GET_ALL_STMT = 
-			"SELECT club_no,sp_no,photo,photo_ext,club_status,club_name,club_intro FROM club order by club_no";
+			"SELECT res_no,post_no,mem_no,res_content,res_date FROM respones order by res_no";
 		private static final String GET_ONE_STMT = 
-			"SELECT club_no,sp_no,photo,photo_ext,club_status,club_name,club_intro FROM club where club_no = ?";
+			"SELECT res_no,post_no,mem_no,res_content,res_date FROM respones where res_no = ?";
 		private static final String UPDATE = 
-			"UPDATE club set sp_no=?, photo=?, photo_ext=?, club_status=?, club_name=?, club_intro=? where club_no = ?";
+			"UPDATE respones set res_no=?, post_no=?, mem_no=?, res_content=?, res_date=?here res_no = ?";
 		
 		
 		@Override
-		public void insert(ClubVO clubVO) {
+		public void insert(ResponesVO responesVO) {
 			Connection con = null;
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
@@ -52,18 +51,16 @@ public class ClubDAO  implements ClubDAO_interface{
 			try {
 				con = ds.getConnection();
 				
-				String[] cols = {"club_no"};
+				String[] cols = {"res_no"};
 				
 				pstmt = con.prepareStatement(INSERT_STMT,cols);
-//				if(clubVO.getClub_name()!=null)
-//					clubVO.setClub_name(clubVO.getClub_name().toUpperCase());
+				if(responesVO.getRes_content()!=null)
+					responesVO.setRes_content(responesVO.getRes_content().toUpperCase());
 				
-				pstmt.setString(1, clubVO.getSp_no());
-				pstmt.setBytes (2, clubVO.getPhoto());
-				pstmt.setString(3, clubVO.getPhoto_ext());
-				pstmt.setString(4, clubVO.getClub_status());
-				pstmt.setString(5, clubVO.getClub_name());
-				pstmt.setString(6, clubVO.getClub_intro());
+				pstmt.setString(1, responesVO.getPost_no());
+				pstmt.setString (2, responesVO.getMem_no());
+				pstmt.setString(3, responesVO.getRes_content());
+				pstmt.setTimestamp(4, responesVO.getRes_date());
 				
 				if(pstmt.executeUpdate()==1) {
 					System.out.println("---成功輸入---");
@@ -77,8 +74,8 @@ public class ClubDAO  implements ClubDAO_interface{
 				if(rs.next()) {
 					do {
 						for(int i = 1; i<= columnCount;i++) {
-							clubVO.setClub_no(rs.getString(1));
-							System.out.println("自增主鍵值 = " + clubVO.getClub_no()+"(剛新增成功的newstype_no)");
+							responesVO.setRes_no(rs.getString(1));
+							System.out.println("自增主鍵值 = " + responesVO.getRes_no()+"(剛新增成功的newstype_no)");
 						}
 					}while (rs.next());
 				} else {
@@ -109,7 +106,7 @@ public class ClubDAO  implements ClubDAO_interface{
 		
 		
 		@Override
-		public void update(ClubVO clubVO) {
+		public void update(ResponesVO responesVO) {
 			Connection con = null;
 			PreparedStatement pstmt = null;
 			
@@ -117,13 +114,10 @@ public class ClubDAO  implements ClubDAO_interface{
 				con = ds.getConnection();
 				pstmt = con.prepareStatement(UPDATE);
 				
-				pstmt.setString(1, clubVO.getSp_no());
-				pstmt.setBytes (2, clubVO.getPhoto());
-				pstmt.setString(3, clubVO.getPhoto_ext());
-				pstmt.setString(4, clubVO.getClub_status());
-				pstmt.setString(5, clubVO.getClub_name());
-				pstmt.setString(6, clubVO.getClub_intro());
-				pstmt.setString(7, clubVO.getClub_no());
+				pstmt.setString (1, responesVO.getPost_no());
+				pstmt.setString(2, responesVO.getMem_no());
+				pstmt.setString(3, responesVO.getRes_content());
+				pstmt.setTimestamp(4, responesVO.getRes_date());
 				
 				pstmt.executeUpdate();
 			} catch (SQLException se) {
@@ -151,9 +145,9 @@ public class ClubDAO  implements ClubDAO_interface{
 			
 		
 		@Override
-		public ClubVO findByPrimaryKey(String club_no) {
+		public ResponesVO findByPrimaryKey(String club_no) {
 
-			ClubVO clubVO = null;
+			ResponesVO responesVO = null;
 			Connection con = null;
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
@@ -166,14 +160,12 @@ public class ClubDAO  implements ClubDAO_interface{
 				rs = pstmt.executeQuery();
 				
 				while (rs.next()) {
-					clubVO = new ClubVO();
-					clubVO.setClub_no(rs.getString("club_no"));
-					clubVO.setSp_no(rs.getString("sp_no"));
-					clubVO.setPhoto(rs.getBytes("photo"));
-					clubVO.setPhoto_ext(rs.getString("photo_ext"));
-					clubVO.setClub_status(rs.getString("club_status"));
-					clubVO.setClub_name(rs.getString("club_name"));
-					clubVO.setClub_intro(rs.getString("club_intro"));
+					responesVO = new ResponesVO();
+					pstmt.setString(1, responesVO.getRes_no());
+					pstmt.setString (2, responesVO.getPost_no());
+					pstmt.setString(3, responesVO.getMem_no());
+					pstmt.setString(4, responesVO.getRes_content());
+					pstmt.setTimestamp(5, responesVO.getRes_date());
 				
 				}
 				
@@ -203,14 +195,14 @@ public class ClubDAO  implements ClubDAO_interface{
 					}
 				}
 			}
-			return clubVO;
+			return responesVO;
 		}
 		
 		
 		@Override
-		public List<ClubVO> getAll() {
-			List<ClubVO> list = new ArrayList<ClubVO>();
-			ClubVO clubVO = null;
+		public List<ResponesVO> getAll() {
+			List<ResponesVO> list = new ArrayList<ResponesVO>();
+			ResponesVO responesVO = null;
 			
 			Connection con = null;
 			PreparedStatement pstmt = null;
@@ -221,15 +213,13 @@ public class ClubDAO  implements ClubDAO_interface{
 				pstmt = con.prepareStatement(GET_ALL_STMT);
 				rs = pstmt.executeQuery();
 				while(rs.next()) {
-					clubVO = new ClubVO();
-					clubVO.setClub_no(rs.getString("club_no"));
-					clubVO.setSp_no(rs.getString("sp_no"));
-					clubVO.setPhoto(rs.getBytes("photo"));
-					clubVO.setPhoto_ext(rs.getString("photo_ext"));
-					clubVO.setClub_status(rs.getString("club_status"));
-					clubVO.setClub_name(rs.getString("club_name"));
-					clubVO.setClub_intro(rs.getString("club_intro"));
-					list.add(clubVO);
+					responesVO = new ResponesVO();
+					pstmt.setString(1, responesVO.getRes_no());
+					pstmt.setString (2, responesVO.getPost_no());
+					pstmt.setString(3, responesVO.getMem_no());
+					pstmt.setString(4, responesVO.getRes_content());
+					pstmt.setTimestamp(5, responesVO.getRes_date());
+					list.add(responesVO);
 				}
 			
 			} catch (SQLException se) {
@@ -259,6 +249,13 @@ public class ClubDAO  implements ClubDAO_interface{
 				}
 			}
 			return list;
+		}
+
+
+		@Override
+		public void delete(String res_no) {
+			// TODO Auto-generated method stub
+			
 		}
 }
 		
