@@ -20,6 +20,7 @@ import javax.servlet.http.Part;
 
 import com.club.model.ClubService;
 import com.club.model.ClubVO;
+import com.sport.model.SportService;
 
 
 @MultipartConfig(fileSizeThreshold=1024*1024, maxFileSize=5*1024*1024, maxRequestSize=5*5*1024*1024)
@@ -225,6 +226,15 @@ if ("update".equals(actionfront)) { // 來自update_emp_input.jsp的請求
 				
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("ClubVo", clubVO);
+				
+				SportService sportSvc = new SportService();
+				if(requestURL.equals(""))
+				if(requestURL.equals("/front-end/club/CompositeQuery.jsp")) {
+					HttpSession session = req.getSession();
+					Map<String, String[]> map = (Map<String, String[]>)session.getAttribute("map");
+					List<ClubVO> list = clubSvc.getAll(map);
+					req.setAttribute("CompositeQuery.jsp", list);
+				}
 				
 				String url = requestURL;
 				RequestDispatcher successView = req.getRequestDispatcher(url);   // 修改成功後,轉交回送出修改的來源網頁
