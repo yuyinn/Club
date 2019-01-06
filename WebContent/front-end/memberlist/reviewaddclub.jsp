@@ -3,6 +3,7 @@
 <%@ page import="java.util.*"%>
 <%@ page import="com.club.model.*"%>
 <%@ page import="com.sport.model.*"%>
+<%@ page import="com.memberlist.model.*"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <%

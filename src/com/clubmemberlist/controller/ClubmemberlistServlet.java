@@ -170,14 +170,29 @@ if ("update".equals(action)) { // 來自update_emp_input.jsp的請求
 					errorMsgs.add("社團編號: 只能是英文字母、數字和_ , 且長度必需在5到7之間");
 	            }
 				
+
 				String cmem_status = req.getParameter("cmem_status").trim();
-				if (cmem_status == null || cmem_status.trim().length() == 0) {
-					errorMsgs.add("社團成員狀態請勿空白");
+				if ("禁言中".equals(cmem_status)){
+					errorMsgs.add("請詢問社團管理員");
+					if("待審核".equals(cmem_status)||"已退出".equals(cmem_status)) {
+						errorMsgs.add("請加入社團");
+					}
+				}else{
+					cmem_status=null;
+					if(cmem_status.trim().length() == 0) {
+						errorMsgs.add("社團成員狀態請勿空白");
+					}
 				}
 				
+
 				String cmem_class = req.getParameter("cmem_class").trim();
-				if (cmem_class == null || cmem_class.trim().length() == 0) {
-					errorMsgs.add("社團成員類別請勿空白");
+				if ("一般成員".equals(cmem_status)){
+					errorMsgs.add("您無社團管理權限");
+				}else{
+					cmem_status=null;
+					if(cmem_status.trim().length() == 0) {
+						errorMsgs.add("社團成員狀態請勿空白");
+					}
 				}
 				
 				String mem_no = req.getParameter("mem_no").trim();
@@ -235,7 +250,7 @@ if ("update".equals(action)) { // 來自update_emp_input.jsp的請求
 			}
 		}
 
-if ("insert".equals(action)) { // 來自addEmp.jsp的請求  
+if ("insert".equals(action)) { 
 			
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
@@ -244,9 +259,10 @@ if ("insert".equals(action)) { // 來自addEmp.jsp的請求
 				/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
 			
 				String cmem_status = req.getParameter("cmem_status").trim();
-				if (cmem_status == null || cmem_status.trim().length() == 0) {
+				if (cmem_status == null || cmem_status.trim().length() == 0 ) {
 					errorMsgs.add("社團成員狀態請勿空白");
 				}
+			
 				
 				String cmem_class = req.getParameter("cmem_class").trim();
 				if (cmem_class == null || cmem_class.trim().length() == 0) {
@@ -264,26 +280,26 @@ if ("insert".equals(action)) { // 來自addEmp.jsp的請求
 					errorMsgs.add("請輸入時間!");
 				}
 
-				ClubmemberlistVO clubmemberlistVO = new ClubmemberlistVO();
 				
-				
-				clubmemberlistVO.setCmem_status(cmem_status);
-				clubmemberlistVO.setCmem_class(cmem_class);
-				clubmemberlistVO.setSilence_time(silence_time);
 
 				
-				System.out.println(clubmemberlistVO+"test");
-				// Send the use back to the form, if there were errors
+			
+
+				
+//				System.out.println(clubmemberlistVO+"test");
+				
 				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("clubmemberlistVO", clubmemberlistVO); // 含有輸入格式錯誤的empVO物件,也存入req
+					req.setAttribute("clubmemberlistVO", clubmemberlistVO); 
 					RequestDispatcher failureView = req
 							.getRequestDispatcher("/clubmemberlist/clubmemberlist_list.jsp");
 					failureView.forward(req, res);
 					return;
 				}
 				
+				
 				/***************************2.開始新增資料***************************************/
 				ClubmemberlistService clubmemberlistSvc = new ClubmemberlistService();
+				
 				clubmemberlistVO = clubmemberlistSvc.addClubmemberlist(cmem_status, cmem_class,silence_time);
 				
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
@@ -299,6 +315,7 @@ if ("insert".equals(action)) { // 來自addEmp.jsp的請求
 				failureView.forward(req, res);
 			}
 		}
+
 		
 	}
 }

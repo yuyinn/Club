@@ -26,6 +26,21 @@ public class ClubmemberlistService {
 		return clubmemberlistVO;
 	}
 	
+	public ClubmemberlistVO addintoClubmemberlist(String cmem_status,String cmem_class) {
+		
+		ClubmemberlistVO clubmemberlistVO = new ClubmemberlistVO();
+
+		
+		clubmemberlistVO.setCmem_status(cmem_status);
+		clubmemberlistVO.setCmem_class(cmem_class);
+		
+
+		dao.insert(clubmemberlistVO);
+		
+		return clubmemberlistVO;
+	}
+	
+	
 	public ClubmemberlistVO updateClubmemberlist(String club_no,String mem_no,String cmem_status,String cmem_class,Timestamp silence_time) {
 		
 		ClubmemberlistVO clubmemberlistVO = new ClubmemberlistVO();

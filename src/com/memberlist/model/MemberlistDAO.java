@@ -18,7 +18,7 @@ public class MemberlistDAO implements MemberlistDAO_interface{
 			Context ctx;
 			try {
 				ctx = new InitialContext();
-				ds = (DataSource)ctx.lookup("java:comp/env/jdbc/CA105G1DB");
+				ds = (DataSource)ctx.lookup("java:comp/env/jdbc/CA105G1");
 			} catch (NamingException e) {
 				e.printStackTrace();
 			}
@@ -461,16 +461,15 @@ public class MemberlistDAO implements MemberlistDAO_interface{
 				vo.setSg_pic(rs.getBytes("sg_pic"));
 				vo.setSg_pic_ext(rs.getString("sg_pic_ext"));
 				vo.setSg_per(rs.getString("sg_per"));
-				vo.setSp_no(rs.getString("sp_no"));
-				vo.setV_no(rs.getString("v_no"));
+				vo.setSport_no(rs.getString("sp_no"));
+				vo.setVenue_no(rs.getString("Venue_no"));
 				vo.setSg_maxno(rs.getInt("sg_maxno"));
 				vo.setSg_minno(rs.getInt("sg_minno"));
 				vo.setSg_ttlapl(rs.getInt("sg_ttlapl"));
 				vo.setSg_chkno(rs.getInt("sg_chkno"));
 				vo.setSg_extrainfo(rs.getString("sg_extrainfo"));
 				vo.setSg_status(rs.getString("sg_status"));
-				vo.setLoc_start(rs.getString("loc_start"));
-				vo.setLoc_end(rs.getString("loc_end"));
+				
 
 				list.add(vo);
 			}
