@@ -158,10 +158,7 @@
 												<div class="modal-footer">
 													<input type="hidden" name="actionfront" value="insert">
 													<button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
-													
 													<button type="submit" class="btn btn-primary">送出</button>
-													 
-
 												</div>
 											</FORM>
 											<%-- 錯誤表列 --%>
@@ -229,7 +226,7 @@
 				<div class="col-xs-12 col-lg-9">
 			    		<c:forEach var="clubVO" items="${list}">
 								<div class="col-xs-12 col-sm-4">
-										<div class="container_1" stylze="padding:15px,20px,15px,20px">
+										<div class="container_1" >
 										<div class="card" >
 											<div>
 											<img class="img-responsive card-img-top" src="<%=request.getContextPath()%>/club/clubImg.do?club_no=${clubVO.club_no}">
@@ -237,12 +234,14 @@
 											<div class="card-body">
 												<h4 class="card-title">${clubVO.club_name}</h4>
 												<p class="card-text">${clubVO.club_intro}</p>
-												<div class="row" >
-												
-												<a href='<%=request.getContextPath()%>/front-end/club/listOneClub.jsp' class="btn btn-primary">加入</a>
-												</div>
-												<br> <br>
 											</div>
+											
+											<div class="card-footer" style="padding-left: 90px;">
+												<a href='<%=request.getContextPath()%>/clubfront.do?actionfront=getOneClub&club_no=${clubVO.club_no}' class="btn btn-primary">加入</a>
+												&nbsp;&nbsp;
+												<a href='<%=request.getContextPath()%>/clubfront.do?actionfront=getOneClub&club_no=${clubVO.club_no}' class="btn btn-primary">進入</a>
+											</div>
+											<br><br>
 										</div>
 									</div>
 								</div>

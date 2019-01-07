@@ -324,6 +324,7 @@ public class ClubmemberlistJDBCDAO implements ClubmemberlistDAO_interface{
 		return null;
 	}
 
+
 	
 
 }

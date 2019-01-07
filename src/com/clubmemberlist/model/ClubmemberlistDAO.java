@@ -28,13 +28,13 @@ public class ClubmemberlistDAO  implements ClubmemberlistDAO_interface{
 	
 		
 		private static final String INSERT_STMT = 
-			"INSERT INTO clubmemberlist (club_no,mem_no,cmem_status,cmem_class,silence_time) VALUES (?, ?, ?, ?, ?)";
+			"INSERT INTO club_memberlist (club_no,mem_no,cmem_status,cmem_class,silence_time) VALUES (?, ?, ?, ?, ?)";
 		private static final String GET_ALL_STMT = 
-			"SELECT club_no,mem_no,cmem_status,cmem_class,silence_time FROM clubmemberlist order by club_no=? && mem_no=?";
+			"SELECT club_no,mem_no,cmem_status,cmem_class,silence_time FROM club_memberlist order by club_no, mem_no";
 		private static final String GET_ONE_STMT = 
-			"SELECT club_no,mem_no,cmem_status,cmem_class,silence_time FROM clubmemberlist where club_no=? && mem_no=?";
+			"SELECT club_no,mem_no,cmem_status,cmem_class,silence_time FROM club_memberlist where club_no=? and mem_no=?";
 		private static final String UPDATE = 
-			"UPDATE clubmemberlist set club_no=?, mem_no=?, cmem_status=?, cmem_class=?, silence_time=?  where club_no=? && mem_no=?";
+			"UPDATE club_memberlist set cmem_status=?, cmem_class=?, silence_time=?  where club_no=? and mem_no=?";
 		
 		
 		@Override
@@ -82,16 +82,16 @@ public class ClubmemberlistDAO  implements ClubmemberlistDAO_interface{
 		public void update(ClubmemberlistVO clubmemberlistVO) {
 			Connection con = null;
 			PreparedStatement pstmt = null;
-			
+//			"UPDATE club_memberlist set cmem_status=?, cmem_class=?, silence_time=?  where club_no=? and mem_no=?";
 			try {
 				con = ds.getConnection();
 				pstmt = con.prepareStatement(UPDATE);
 				
-				pstmt.setString(1, clubmemberlistVO.getClub_no());
-				pstmt.setString (2, clubmemberlistVO.getMem_no());
-				pstmt.setString(3, clubmemberlistVO.getCmem_status());
-				pstmt.setString(4, clubmemberlistVO.getCmem_class());
-				pstmt.setTimestamp(5, clubmemberlistVO.getSilence_time());
+				pstmt.setString(1, clubmemberlistVO.getCmem_status());
+				pstmt.setString(2, clubmemberlistVO.getCmem_class());
+				pstmt.setTimestamp(3, clubmemberlistVO.getSilence_time());
+				pstmt.setString(4, clubmemberlistVO.getClub_no());
+				pstmt.setString (5, clubmemberlistVO.getMem_no());
 				
 				pstmt.executeUpdate();
 			} catch (SQLException se) {
@@ -288,6 +288,8 @@ public class ClubmemberlistDAO  implements ClubmemberlistDAO_interface{
 			}
 			return list;
 		}
+
+
 
 
 

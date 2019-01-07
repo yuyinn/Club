@@ -35,7 +35,7 @@
 			<ul class="nav navbar-nav">
 				<li class="active"><a href="#">SportyGo!</a></li>
 				<li><a href="#">揪團去</a></li>
-				<li><a href="#">社團</a></li>
+				<li><a href="<%=request.getContextPath()%>/front-end/club/club_list.jsp">社團</a></li>
 			</ul>
 		
 			<!-- 搜尋表單 -->

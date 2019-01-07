@@ -5,11 +5,8 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <%
-	ClubService clubSvc = new ClubService();
-	List<ClubVO> list = clubSvc.getAll();
-	pageContext.setAttribute("list", list);
-	//ClubVO clubVO = (ClubVO)request.getAttribute("clubVO");
-	
+
+	ClubVO clubVO = (ClubVO)request.getAttribute("clubVO");
 %>
 
 
@@ -181,25 +178,13 @@
 					
 					<br>
 <!---------------------------- 貼文列表 ------------------------------------->
+	
 					<div class="card text-center" id="post">
+							<h3 class="card-title">關於這個社團</h3>
   							<div class="card-body">
-    							<h5 class="card-title">貼文標題</h5>
-    							<p class="card-text">貼文內容</p>
-  							</div>
-  							<div class="card-footer text-muted">
-    						回文
+  							<p></p>
   							</div>
 					</div>
-					<br>
-<!-------------------------社團內的揪團 ------------------------------------->
-					<div class="card text-center" >
-  							<div class="card-body">
-    							<p class="card-text">社團內的揪團</p>
-  							</div>
-  							<div class="card-footer text-muted">
-  							</div>
-					</div>
-									
 				</div>
 					
 				<div class="col-xs-12 col-lg-2" id="xx">

@@ -78,6 +78,15 @@
   	<servlet-name>ClubImgServlet</servlet-name>
   	<url-pattern>/club/clubImg.do</url-pattern>
   </servlet-mapping>
+  
+   <servlet>
+  	<servlet-name>ClubmemberlistServlet</servlet-name>
+  	<servlet-class>com.clubmemberlist.controller.ClubmemberlistServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>ClubmemberlistServlet</servlet-name>
+  	<url-pattern>/clubmemberlist.do</url-pattern>
+  </servlet-mapping>
 
   <servlet>
     <servlet-name>VenueServlet</servlet-name>

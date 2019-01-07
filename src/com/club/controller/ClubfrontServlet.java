@@ -27,6 +27,10 @@ import com.sport.model.SportService;
 public class ClubfrontServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
+	private static final String CLUB_LIST = "/front-end/club/club_list.jsp";
+	private static final String CLUB_PAGE = "/front-end/club/club_page.jsp";
+	private static final String CLUB_INTRO = "/front-end/club/club_intro.jsp";
+	
 	public ClubfrontServlet(){
 		super();
 	}
@@ -43,80 +47,81 @@ public class ClubfrontServlet extends HttpServlet {
 		String actionfront = req.getParameter("actionfront");
 		System.out.println(actionfront);
 		
-if ("getOne_For_Display".equals(actionfront)) { 
+if ("getOneClub".equals(actionfront)) { //進入or加入社團
 
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
+			String requestURL = req.getParameter("requestURL");
 
 			try {
 				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
-				String str = req.getParameter("club_no");
-				if (str == null || (str.trim()).length() == 0) {
-					errorMsgs.add("請輸入社團編號");
-				}
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req
-							.getRequestDispatcher("front-end/club/clublist.jsp");
-					failureView.forward(req, res);
-					return;
-				}
+				String club_no = req.getParameter("club_no");
 				
-				String club_no = null;
-				try {
-					club_no = new String(str);
-				} catch (Exception e) {
-					errorMsgs.add("社團編號格式不正確");
-				}
-				
-				
-				
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req
-							.getRequestDispatcher("front-end/club/clublist.jsp");
-					failureView.forward(req, res);
-					return;
-				}
-				
-				
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req
-							.getRequestDispatcher("front-end/club/clublist.jsp");
-					failureView.forward(req, res);
-					return;
-				}
 				/***************************2.開始查詢資料*****************************************/
 				ClubService clubSvc = new ClubService();
+	
 				ClubVO clubVO = clubSvc.getOneClub(club_no);
-				if (clubVO == null) {
-					errorMsgs.add("查無資料");
-				}
 				
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req
-							.getRequestDispatcher("front-end/club/clublist.jsp");
-					failureView.forward(req, res);
-					return;//程式中斷
-				}
 				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("clubVO", clubVO); 
-				String url = "front-end/club/listOneClub.jsp";
-				RequestDispatcher successView = req.getRequestDispatcher(url); 
+				
+				RequestDispatcher successView = req.getRequestDispatcher(CLUB_PAGE); 
 				successView.forward(req, res);
 
 				/***************************其他可能的錯誤處理*************************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
+				String url = requestURL;
+				url = url.substring(1,url.length());
+				url = url.substring(url.indexOf("/"),url.length());
+				System.out.println("url : "+url);
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("front-end/club/select_page.jsp");
+						.getRequestDispatcher(url);
 				failureView.forward(req, res);
 			}
 		}
+
+
+if ("getOneClubintro".equals(actionfront)) { //進入社團簡介
+
+	List<String> errorMsgs = new LinkedList<String>();
+	req.setAttribute("errorMsgs", errorMsgs);
+	String requestURL = req.getParameter("requestURL");
+
+	try {
+		/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
+		String club_no = req.getParameter("club_no");
+		
+		/***************************2.開始查詢資料*****************************************/
+		ClubService clubSvc = new ClubService();
+
+		ClubVO clubVO = clubSvc.getOneClub(club_no);
+		
+		/***************************3.查詢完成,準備轉交(Send the Success view)*************/
+		req.setAttribute("clubVO", clubVO); 
+		
+		RequestDispatcher successView = req.getRequestDispatcher(CLUB_INTRO); 
+		successView.forward(req, res);
+
+		/***************************其他可能的錯誤處理*************************************/
+	} catch (Exception e) {
+		errorMsgs.add("無法取得資料:" + e.getMessage());
+		String url = requestURL;
+		url = url.substring(1,url.length());
+		url = url.substring(url.indexOf("/"),url.length());
+		System.out.println("url : "+url);
+		RequestDispatcher failureView = req
+				.getRequestDispatcher(url);
+		failureView.forward(req, res);
+	}
+}
 		
 		
 if ("getOne_For_Update".equals(actionfront)) { 
 
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
+			String requestURL = req.getParameter("requestURL");
 			
 			try {
 				/***************************1.接收請求參數****************************************/
@@ -128,20 +133,23 @@ if ("getOne_For_Update".equals(actionfront)) {
 								
 				/***************************3.查詢完成,準備轉交(Send the Success view)************/
 				req.setAttribute("clubVO", clubVO);       
-				String url = "front-end/club/update_club_input.jsp";
+				String url = requestURL;
+				url = url.substring(1,url.length());
+				url = url.substring(url.indexOf("/"),url.length());
+				System.out.println("url : "+url);
 				RequestDispatcher successView = req.getRequestDispatcher(url);
 				successView.forward(req, res);
 				/***************************其他可能的錯誤處理**********************************/
 			} catch (Exception e) {
 				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("front-end/club/listAllClub.jsp");
+						.getRequestDispatcher(CLUB_PAGE);
 				failureView.forward(req, res);
 			}
 		}
 		
 		
-if ("update".equals(actionfront)) { // 來自update_emp_input.jsp的請求
+if ("update".equals(actionfront)) { 
 			
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
@@ -173,21 +181,6 @@ if ("update".equals(actionfront)) { // 來自update_emp_input.jsp的請求
 					is.close();
 				}
 				
-				
-//				byte[] photo = null;
-//				Part part = req.getPart("photo");
-//				if(getFileNameFromPart(part) != null) {
-//					InputStream in = part.getInputStream();
-//					photo = new byte[in.available()];
-//					in.read(photo);
-//				}else {
-//					File file = new File("images/C0007.jpg");
-//					FileInputStream is = new FileInputStream(file);
-//					photo = new byte[is.available()];
-//					is.read(photo);
-//				}
-				
-				
 
 				String club_name = req.getParameter("club_name").trim();
 				if (club_name == null || club_name.trim().length() == 0) {
@@ -215,7 +208,7 @@ if ("update".equals(actionfront)) { // 來自update_emp_input.jsp的請求
 				if (!errorMsgs.isEmpty()) {
 					req.setAttribute("clubVO", clubVO); // 含有輸入格式錯誤的empVO物件,也存入req
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/front-end/club/update_club_input.jsp");
+							.getRequestDispatcher(CLUB_PAGE);
 					failureView.forward(req, res);
 					return; //程式中斷
 				}
@@ -225,7 +218,7 @@ if ("update".equals(actionfront)) { // 來自update_emp_input.jsp的請求
 				clubVO = clubSvc.updateClub(club_no, sp_no,photo, photo_ext, club_status, club_name,club_intro);
 				
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
-				req.setAttribute("ClubVo", clubVO);
+				req.setAttribute("ClubVO", clubVO);
 				
 				SportService sportSvc = new SportService();
 				if(requestURL.equals(""))
@@ -245,7 +238,7 @@ if ("update".equals(actionfront)) { // 來自update_emp_input.jsp的請求
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:"+e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("front-end/club/update_club_input.jsp");
+						.getRequestDispatcher(CLUB_LIST);
 				failureView.forward(req, res);
 			}
 		}
@@ -304,7 +297,7 @@ if ("insert".equals(actionfront)) {
 				
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
-							.getRequestDispatcher("/front-end/club/club_list.jsp");
+							.getRequestDispatcher(CLUB_LIST);
 					failureView.forward(req, res);
 					return;
 				}
@@ -324,7 +317,7 @@ if ("insert".equals(actionfront)) {
 				e.printStackTrace();
 				errorMsgs.add(e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher("/front-end/club/club_list.jsp");
+						.getRequestDispatcher(CLUB_LIST);
 				failureView.forward(req, res);
 			}
 		}

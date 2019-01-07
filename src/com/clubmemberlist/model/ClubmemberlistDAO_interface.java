@@ -11,9 +11,9 @@ public interface ClubmemberlistDAO_interface {
 //    public void delete(String club_no,String mem_no);
     public ClubmemberlistVO findByPrimaryKey(String club_no,String mem_no);
     public List<ClubmemberlistVO> getAll();
-    
-    
-	public List<ClubmemberlistVO> getAll(Map<String, String[]> map);
+  
+    public List<ClubmemberlistVO> getAll(Map<String, String[]> map);
+
     
 	
 }

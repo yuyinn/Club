@@ -8,9 +8,18 @@
 	ClubService clubSvc = new ClubService();
 	List<ClubVO> list = clubSvc.getAll();
 	pageContext.setAttribute("list", list);
-	//ClubVO clubVO = (ClubVO)request.getAttribute("clubVO");
 	
+	if("getoneclub".equals((request.getParameter("actionfront")) && object != null){
+		clubSvc.getOneClub(club_no);
+	}
 %>
+
+
+<% if("insert".equals(request.getParameter("actionfront")) && object != null){
+		List<String> errorMsgs = (List<String>)object;%>
+		<a class="list-group-item list-group-item-actionfront" data-toggle="modal" data-target="#clubModalLong" 
+ 		   href="#createclub" role="tab" id="myCreateClud">建立社團</a>
+								<% }%>
 
 
 <html >
@@ -59,12 +68,13 @@
 				
 					<div class="col-xs-12 col-sm-1" style="margin-right: -;padding-left: 5px;padding-right: 5px;">
 					<input type="hidden" name="actionfront" value="getoneclub">
-					<h4 id="club_name" class="_19s-" >
-					<a href='<%=request.getContextPath()%>/clubfront.do?actionfront=getOneClub&club_no=${clubVO.club_no}' >
-						${clubVO.club_name}
-					</a>
-					</h4>
-
+					<jsp:useBean id="clubsvc2" scope="page" class="com.club.model.ClubService" />
+					<c:forEach var="clubVO" items="${list}">
+					<h1 id="club_name" class="_19s-" name="action" value="getOneClub">
+<!-- 						<a href=""> -->
+						<a>${clubVO.club_name}</a>
+					</h1>
+					</c:forEach>
 						<div class="list-group active">
 						<a href="#" class="list-group-item">簡介</a>
 						<a href="#" class="list-group-item">成員</a>

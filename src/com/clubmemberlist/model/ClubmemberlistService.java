@@ -68,4 +68,43 @@ public class ClubmemberlistService {
 		return dao.getAll(map);
 	}
 	
+	
+
+
+public ClubmemberlistVO privilege(String club_no, String mem_no, String cmem_status, String cmem_class) {
+	ClubmemberlistVO clubmemberlistVO = new ClubmemberlistVO();
+	
+	clubmemberlistVO.setClub_no(club_no);
+	clubmemberlistVO.setMem_no(mem_no);
+	clubmemberlistVO.setCmem_status(cmem_status);
+	clubmemberlistVO.setCmem_class(cmem_class);
+	
+	dao.update(clubmemberlistVO);
+	
+	return clubmemberlistVO;
+}
+
+public ClubmemberlistVO addintoclub(String club_no, String mem_no) {
+	ClubmemberlistVO clubmemberlistVO = new ClubmemberlistVO();
+	
+	clubmemberlistVO.setClub_no(club_no);
+	clubmemberlistVO.setMem_no(mem_no);
+	clubmemberlistVO.setCmem_status("正式會員");
+	clubmemberlistVO.setCmem_class("一般成員");
+	dao.update(clubmemberlistVO);
+	
+	return clubmemberlistVO;
+}
+
+public ClubmemberlistVO dropoutclub(String club_no, String mem_no) {
+	ClubmemberlistVO clubmemberlistVO = new ClubmemberlistVO();
+	
+	clubmemberlistVO.setClub_no(club_no);
+	clubmemberlistVO.setMem_no(mem_no);
+	
+	dao.update(clubmemberlistVO);
+	
+	return clubmemberlistVO;
+}
+
 }
