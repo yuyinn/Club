@@ -1,20 +1,20 @@
-package com.clubmemberlist.model;
+package com.club_memberlist.model;
 
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Map;
 
-public class ClubmemberlistService {
+public class Club_memberlistService {
 
-	private ClubmemberlistDAO_interface dao;
+	private Club_memberlistDAO_interface dao;
 	
-	public ClubmemberlistService() {
-		dao = new ClubmemberlistDAO();
+	public Club_memberlistService() {
+		dao = new Club_memberlistDAO();
 	}
 	
-	public ClubmemberlistVO addClubmemberlist(String cmem_status,String cmem_class,Timestamp silence_time) {
+	public Club_memberlistVO addClubmemberlist(String cmem_status,String cmem_class,Timestamp silence_time) {
 		
-		ClubmemberlistVO clubmemberlistVO = new ClubmemberlistVO();
+		Club_memberlistVO clubmemberlistVO = new Club_memberlistVO();
 
 		
 		clubmemberlistVO.setCmem_status(cmem_status);
@@ -26,9 +26,9 @@ public class ClubmemberlistService {
 		return clubmemberlistVO;
 	}
 	
-	public ClubmemberlistVO addintoClubmemberlist(String cmem_status,String cmem_class) {
+	public Club_memberlistVO addintoClubmemberlist(String cmem_status,String cmem_class) {
 		
-		ClubmemberlistVO clubmemberlistVO = new ClubmemberlistVO();
+		Club_memberlistVO clubmemberlistVO = new Club_memberlistVO();
 
 		
 		clubmemberlistVO.setCmem_status(cmem_status);
@@ -41,9 +41,9 @@ public class ClubmemberlistService {
 	}
 	
 	
-	public ClubmemberlistVO updateClubmemberlist(String club_no,String mem_no,String cmem_status,String cmem_class,Timestamp silence_time) {
+	public Club_memberlistVO updateClubmemberlist(String club_no,String mem_no,String cmem_status,String cmem_class,Timestamp silence_time) {
 		
-		ClubmemberlistVO clubmemberlistVO = new ClubmemberlistVO();
+		Club_memberlistVO clubmemberlistVO = new Club_memberlistVO();
 		
 		clubmemberlistVO.setClub_no(club_no);
 		clubmemberlistVO.setMem_no(mem_no);
@@ -56,23 +56,23 @@ public class ClubmemberlistService {
 		return clubmemberlistVO;
 	}
 	
-	public ClubmemberlistVO getOneClubmemberlist(String club_no,String mem_no) {
+	public Club_memberlistVO getOneClubmemberlist(String club_no,String mem_no) {
 		return dao.findByPrimaryKey(club_no, mem_no);
 	}
 	
-	public List<ClubmemberlistVO> getAll(){
+	public List<Club_memberlistVO> getAll(){
 		return dao.getAll();
 	}
 	
-	public List<ClubmemberlistVO> getAll(Map<String, String[]> map) {
+	public List<Club_memberlistVO> getAll(Map<String, String[]> map) {
 		return dao.getAll(map);
 	}
 	
 	
 
 
-public ClubmemberlistVO privilege(String club_no, String mem_no, String cmem_status, String cmem_class) {
-	ClubmemberlistVO clubmemberlistVO = new ClubmemberlistVO();
+public Club_memberlistVO privilege(String club_no, String mem_no, String cmem_status, String cmem_class) {
+	Club_memberlistVO clubmemberlistVO = new Club_memberlistVO();
 	
 	clubmemberlistVO.setClub_no(club_no);
 	clubmemberlistVO.setMem_no(mem_no);
@@ -84,8 +84,8 @@ public ClubmemberlistVO privilege(String club_no, String mem_no, String cmem_sta
 	return clubmemberlistVO;
 }
 
-public ClubmemberlistVO addintoclub(String club_no, String mem_no) {
-	ClubmemberlistVO clubmemberlistVO = new ClubmemberlistVO();
+public Club_memberlistVO addintoclub(String club_no, String mem_no) {
+	Club_memberlistVO clubmemberlistVO = new Club_memberlistVO();
 	
 	clubmemberlistVO.setClub_no(club_no);
 	clubmemberlistVO.setMem_no(mem_no);
@@ -96,8 +96,8 @@ public ClubmemberlistVO addintoclub(String club_no, String mem_no) {
 	return clubmemberlistVO;
 }
 
-public ClubmemberlistVO dropoutclub(String club_no, String mem_no) {
-	ClubmemberlistVO clubmemberlistVO = new ClubmemberlistVO();
+public Club_memberlistVO dropoutclub(String club_no, String mem_no) {
+	Club_memberlistVO clubmemberlistVO = new Club_memberlistVO();
 	
 	clubmemberlistVO.setClub_no(club_no);
 	clubmemberlistVO.setMem_no(mem_no);

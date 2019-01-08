@@ -133,8 +133,8 @@
 													<div class="form-group">
 														<label class="sport">運動項目</label> <select name="sport" id="sport" class="form-control">
 															<c:forEach var="sportVO" items="${sportSvc.all}">
-																<option value="${sportVO.sp_no}"
-																	${(clubVO.sp_no==sportVO.sp_no)?'selected':'' }>${sportVO.sp_name}
+																<option value="${sportVO.sp_no}"${(clubVO.sp_no==sportVO.sp_no)?'selected':'' }>
+																${sportVO.sp_name}
 															</c:forEach>
 														</select>
 													</div>

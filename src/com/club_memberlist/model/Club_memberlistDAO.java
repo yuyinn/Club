@@ -1,4 +1,4 @@
-package com.clubmemberlist.model;
+package com.club_memberlist.model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,7 +15,7 @@ import javax.sql.DataSource;
 
 
 
-public class ClubmemberlistDAO  implements ClubmemberlistDAO_interface{
+public class Club_memberlistDAO  implements Club_memberlistDAO_interface{
 	private static DataSource ds = null;
 	static {
 		try {
@@ -38,7 +38,7 @@ public class ClubmemberlistDAO  implements ClubmemberlistDAO_interface{
 		
 		
 		@Override
-		public void insert(ClubmemberlistVO clubmemberlistVO) {
+		public void insert(Club_memberlistVO clubmemberlistVO) {
 			Connection con = null;
 			PreparedStatement pstmt = null;
 			
@@ -79,7 +79,7 @@ public class ClubmemberlistDAO  implements ClubmemberlistDAO_interface{
 		
 		
 		@Override
-		public void update(ClubmemberlistVO clubmemberlistVO) {
+		public void update(Club_memberlistVO clubmemberlistVO) {
 			Connection con = null;
 			PreparedStatement pstmt = null;
 //			"UPDATE club_memberlist set cmem_status=?, cmem_class=?, silence_time=?  where club_no=? and mem_no=?";
@@ -119,9 +119,9 @@ public class ClubmemberlistDAO  implements ClubmemberlistDAO_interface{
 			
 		
 		@Override
-		public ClubmemberlistVO findByPrimaryKey(String club_no,String mem_no) {
+		public Club_memberlistVO findByPrimaryKey(String club_no,String mem_no) {
 
-			ClubmemberlistVO clubmemberlistVO = null;
+			Club_memberlistVO clubmemberlistVO = null;
 			Connection con = null;
 			PreparedStatement pstmt = null;
 			ResultSet rs = null;
@@ -135,7 +135,7 @@ public class ClubmemberlistDAO  implements ClubmemberlistDAO_interface{
 				rs = pstmt.executeQuery();
 				
 				while (rs.next()) {
-					clubmemberlistVO = new ClubmemberlistVO();
+					clubmemberlistVO = new Club_memberlistVO();
 					
 					clubmemberlistVO.setClub_no(rs.getString("club_no"));
 					clubmemberlistVO.setMem_no(rs.getString("mem_no"));
@@ -176,9 +176,9 @@ public class ClubmemberlistDAO  implements ClubmemberlistDAO_interface{
 		
 		
 		@Override
-		public List<ClubmemberlistVO> getAll() {
-			List<ClubmemberlistVO> list = new ArrayList<ClubmemberlistVO>();
-			ClubmemberlistVO clubmemberlistVO = null;
+		public List<Club_memberlistVO> getAll() {
+			List<Club_memberlistVO> list = new ArrayList<Club_memberlistVO>();
+			Club_memberlistVO clubmemberlistVO = null;
 			
 			Connection con = null;
 			PreparedStatement pstmt = null;
@@ -189,7 +189,7 @@ public class ClubmemberlistDAO  implements ClubmemberlistDAO_interface{
 				pstmt = con.prepareStatement(GET_ALL_STMT);
 				rs = pstmt.executeQuery();
 				while(rs.next()) {
-					clubmemberlistVO = new ClubmemberlistVO();
+					clubmemberlistVO = new Club_memberlistVO();
 					clubmemberlistVO.setClub_no(rs.getString("club_no"));
 					clubmemberlistVO.setMem_no(rs.getString("mem_no"));
 					clubmemberlistVO.setCmem_status(rs.getString("cmem_status"));
@@ -229,9 +229,9 @@ public class ClubmemberlistDAO  implements ClubmemberlistDAO_interface{
 
 
 		@Override
-		public List<ClubmemberlistVO> getAll(Map<String, String[]> map) {
-			List<ClubmemberlistVO> list = new ArrayList<ClubmemberlistVO>();
-			ClubmemberlistVO clubmemberlistVO = null;
+		public List<Club_memberlistVO> getAll(Map<String, String[]> map) {
+			List<Club_memberlistVO> list = new ArrayList<Club_memberlistVO>();
+			Club_memberlistVO clubmemberlistVO = null;
 		
 			Connection con = null;
 			PreparedStatement pstmt = null;
@@ -249,7 +249,7 @@ public class ClubmemberlistDAO  implements ClubmemberlistDAO_interface{
 				rs = pstmt.executeQuery();
 		
 				while (rs.next()) {
-					clubmemberlistVO = new ClubmemberlistVO();
+					clubmemberlistVO = new Club_memberlistVO();
 					clubmemberlistVO.setClub_no(rs.getString("club_no"));
 					clubmemberlistVO.setMem_no(rs.getString("mem_no"));
 					clubmemberlistVO.setCmem_status(rs.getString("cmem_status"));

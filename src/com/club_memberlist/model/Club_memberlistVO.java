@@ -1,8 +1,8 @@
-package com.clubmemberlist.model;
+package com.club_memberlist.model;
 
 import java.sql.Timestamp;
 
-public class ClubmemberlistVO implements java.io.Serializable{
+public class Club_memberlistVO implements java.io.Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	

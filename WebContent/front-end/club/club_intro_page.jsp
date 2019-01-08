@@ -5,8 +5,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <%
-
-	ClubVO clubVO = (ClubVO)request.getAttribute("clubVO");
+ClubVO clubVO = (ClubVO)request.getAttribute("clubVO");
 %>
 
 
@@ -174,19 +173,28 @@
 					</div>					
 					</div>
 				<div class="col-xs-12 col-sm-7">
-					
-					
 					<br>
 <!---------------------------- 貼文列表 ------------------------------------->
-	
+<%
+
+//   ClubService clubService = new ClubService();
+// //   clubVO = clubService.getOneClub("C0001");
+
+// String club_intro = request.getParameter("club_intro");
+// clubVO = clubService.getOneClub(request.getParameter("club_no"));
+
+   System.out.print(clubVO);
+%>
+<FORM METHOD="post" ACTION="<%=request.getContextPath()%>/clubfront.do" name="form2">
+<%-- 				<jsp:useBean id="clubSvc" scope="page" class="com.club.model.ClubService" /> --%>
 					<div class="card text-center" id="post">
-							<h3 class="card-title">關於這個社團</h3>
+						<h3 class="card-title">關於這個社團</h3>
   							<div class="card-body">
-  							<p></p>
+  								<p><%=clubVO.getClub_intro() %></p>
   							</div>
 					</div>
+</FORM>
 				</div>
-					
 				<div class="col-xs-12 col-lg-2" id="xx">
 					<!-- XXXXXXXXXXXX -->
 <!-- 					<div>XXXXXXXXXXXXXXXX</div> -->

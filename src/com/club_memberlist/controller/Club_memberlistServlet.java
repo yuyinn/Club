@@ -1,4 +1,4 @@
-package com.clubmemberlist.controller;
+package com.club_memberlist.controller;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -18,19 +18,20 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
-
-import com.clubmemberlist.model.ClubmemberlistService;
-import com.clubmemberlist.model.ClubmemberlistVO;
+import com.club_memberlist.model.Club_memberlistService;
+import com.club_memberlist.model.Club_memberlistVO;
 
 @MultipartConfig(fileSizeThreshold=1024*1024, maxFileSize=5*1024*1024, maxRequestSize=5*5*1024*1024)
-public class ClubmemberlistServlet extends HttpServlet{
+public class Club_memberlistServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	
-	private static final String REVIEWADDCLUB_PATH = "/front-end/clubmemberlist/reviewaddclub.jsp";
+	private static final String REVIEWADDCLUB_PATH = "/front-end/club_memberlist/reviewaddclub.jsp";
 	private static final String CLUBLIST_PATH = "/front-end/club/club_list.jsp";
 	private static final String CLUBPAGE_PATH = "/front-end/club/club_page.jsp";
 	
-	public ClubmemberlistServlet(){
+	
+	
+	public Club_memberlistServlet(){
 		super();
 	}
 	public void doGet(HttpServletRequest req, HttpServletResponse res)
@@ -43,7 +44,7 @@ public class ClubmemberlistServlet extends HttpServlet{
 
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
-		System.out.println("ClubmemerListServlet--- action : "+action);
+		System.out.println("Club_memberListServlet--- action : "+action);
 
 //社團成員活動權限
 if ("privilege".equals(action)) { 
@@ -77,17 +78,17 @@ if ("privilege".equals(action)) {
 		}
 		
 		
-		ClubmemberlistVO clubmemberlistVO = new ClubmemberlistVO();
+		Club_memberlistVO club_memberlistVO = new Club_memberlistVO();
 		
-		clubmemberlistVO.setClub_no(club_no);
-		clubmemberlistVO.setMem_no(mem_no);
-		clubmemberlistVO.setCmem_status(cmem_status);
-		clubmemberlistVO.setCmem_class(cmem_class);
+		club_memberlistVO.setClub_no(club_no);
+		club_memberlistVO.setMem_no(mem_no);
+		club_memberlistVO.setCmem_status(cmem_status);
+		club_memberlistVO.setCmem_class(cmem_class);
 		
 
 		// Send the use back to the form, if there were errors
 		if (!errorMsgs.isEmpty()) {
-			req.setAttribute("clubmemberlistVO", clubmemberlistVO); 
+			req.setAttribute("club_memberlistVO", club_memberlistVO); 
 			RequestDispatcher failureView = req
 					.getRequestDispatcher(CLUBPAGE_PATH);
 			failureView.forward(req, res);
@@ -95,12 +96,12 @@ if ("privilege".equals(action)) {
 		}
 		
 		/***************************2.開始修改資料*****************************************/
-		ClubmemberlistService clubmemberlistSvc = new ClubmemberlistService();
-		clubmemberlistVO = clubmemberlistSvc.privilege(club_no, mem_no, cmem_status, cmem_class);
+		Club_memberlistService club_memberlistSvc = new Club_memberlistService();
+		club_memberlistVO = club_memberlistSvc.privilege(club_no, mem_no, cmem_status, cmem_class);
 		
 		/***************************3.修改完成,準備轉交(Send the Success view)*************/
 
-		req.setAttribute("ClubmemberlistVO", clubmemberlistVO);
+		req.setAttribute("Club_memberlistVO", club_memberlistVO);
 		String url = requestURL;
 		RequestDispatcher successView = req.getRequestDispatcher(url);   // 修改成功後,轉交回送出修改的來源網頁
 		successView.forward(req, res);
@@ -129,19 +130,19 @@ if ("addintoclub".equals(action)) {
 		
 		
 		/***************************2.開始修改資料*****************************************/
-		ClubmemberlistVO clubmemberlistVO = new ClubmemberlistVO();
+		Club_memberlistVO club_memberlistVO = new Club_memberlistVO();
 		
-		clubmemberlistVO.setClub_no(club_no);
-		clubmemberlistVO.setMem_no(mem_no);
-		//clubmemberlistVO.setCmem_status("一般會員");
+		club_memberlistVO.setClub_no(club_no);
+		club_memberlistVO.setMem_no(mem_no);
+		//club_memberlistVO.setCmem_status("一般會員");
 		//在這設定初始狀態
 		
-		ClubmemberlistService clubmemberlistSvc = new ClubmemberlistService();
-		clubmemberlistVO = clubmemberlistSvc.addintoclub(club_no, mem_no);
+		Club_memberlistService club_memberlistSvc = new Club_memberlistService();
+		club_memberlistVO = club_memberlistSvc.addintoclub(club_no, mem_no);
 		
 		/***************************3.修改完成,準備轉交(Send the Success view)*************/
 
-		req.setAttribute("ClubmemberlistVO", clubmemberlistVO);
+		req.setAttribute("Club_memberlistVO", club_memberlistVO);
 		String url = requestURL;
 		url = url.substring(1,url.length());
 		url = url.substring(url.indexOf("/"),url.length());
@@ -174,16 +175,16 @@ if ("dropoutclub".equals(action)) {
 		String cmem_status = req.getParameter("cmem_status");
 		
 	
-		ClubmemberlistVO clubmemberlistVO = new ClubmemberlistVO();
+		Club_memberlistVO club_memberlistVO = new Club_memberlistVO();
 		
-		clubmemberlistVO.setClub_no(club_no);
-		clubmemberlistVO.setMem_no(mem_no);
-		clubmemberlistVO.setCmem_status(cmem_status);
+		club_memberlistVO.setClub_no(club_no);
+		club_memberlistVO.setMem_no(mem_no);
+		club_memberlistVO.setCmem_status(cmem_status);
 		
 
 		// Send the use back to the form, if there were errors
 		if (!errorMsgs.isEmpty()) {
-			req.setAttribute("clubmemberlistVO", clubmemberlistVO); 
+			req.setAttribute("club_memberlistVO", club_memberlistVO); 
 			RequestDispatcher failureView = req
 					.getRequestDispatcher(CLUBLIST_PATH);
 			failureView.forward(req, res);
@@ -191,12 +192,12 @@ if ("dropoutclub".equals(action)) {
 		}
 		
 		/***************************2.開始修改資料*****************************************/
-		ClubmemberlistService clubmemberlistSvc = new ClubmemberlistService();
-		clubmemberlistVO = clubmemberlistSvc.addintoclub(club_no, mem_no);
+		Club_memberlistService club_memberlistSvc = new Club_memberlistService();
+		club_memberlistVO = club_memberlistSvc.addintoclub(club_no, mem_no);
 		
 		/***************************3.修改完成,準備轉交(Send the Success view)*************/
 
-		req.setAttribute("ClubmemberlistVO", clubmemberlistVO);
+		req.setAttribute("Club_memberlistVO", club_memberlistVO);
 		String url = requestURL;
 		RequestDispatcher successView = req.getRequestDispatcher(url);   // 修改成功後,轉交回送出修改的來源網頁
 		successView.forward(req, res);
@@ -210,6 +211,49 @@ if ("dropoutclub".equals(action)) {
 		failureView.forward(req, res);
 	}
 }
+//顯示社團成員列表
+if ("cmem_list".equals(action)) { 
+	
+	List<String> errorMsgs = new LinkedList<String>();
+	req.setAttribute("errorMsgs", errorMsgs);
+	String requestURL = req.getParameter("requestURL");
+
+	try {
+		/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
+		
+		String club_no = req.getParameter("club_no");
+		String mem_no =  req.getParameter("mem_no");
+		String cmem_status = req.getParameter("cmem_status");
+		String cmem_class = req.getParameter("cmem_class");
+		
+		
+		Club_memberlistVO club_memberlistVO = new Club_memberlistVO();
+		
+		club_memberlistVO.setClub_no(club_no);
+		club_memberlistVO.setMem_no(mem_no);
+		club_memberlistVO.setCmem_status(cmem_status);
+		club_memberlistVO.setCmem_class(cmem_class);
+		
+		/***************************2.開始修改資料*****************************************/
+		Club_memberlistService club_memberlistSvc = new Club_memberlistService();
+		club_memberlistVO = club_memberlistSvc.privilege(club_no, mem_no, cmem_status, cmem_class);
+		
+		/***************************3.修改完成,準備轉交(Send the Success view)*************/
+
+		req.setAttribute("Club_memberlistVO", club_memberlistVO);
+		String url = requestURL;
+		RequestDispatcher successView = req.getRequestDispatcher(url);   // 修改成功後,轉交回送出修改的來源網頁
+		successView.forward(req, res);
+	
+		/***************************其他可能的錯誤處理*************************************/
+	} catch (Exception e) {
+		errorMsgs.add("修改資料失敗:"+e.getMessage());
+		RequestDispatcher failureView = req
+				.getRequestDispatcher(CLUBPAGE_PATH);
+		failureView.forward(req, res);
+	}
+}
+
 
 if ("Clubmemberlist_CompositeQuery".equals(action)) { // 來自select_page.jsp的複合查詢請求
 	List<String> errorMsgs = new LinkedList<String>();
@@ -225,12 +269,12 @@ if ("Clubmemberlist_CompositeQuery".equals(action)) { // 來自select_page.jsp�
 		Map<String, String[]> map = req.getParameterMap();
 		
 		/***************************2.開始複合查詢***************************************/
-		ClubmemberlistService memberlistSvc = new ClubmemberlistService();
-		List<ClubmemberlistVO> list  = memberlistSvc.getAll(map);
+		Club_memberlistService club_memberlistSvc = new Club_memberlistService();
+		List<Club_memberlistVO> list  = club_memberlistSvc.getAll(map);
 		
 		/***************************3.查詢完成,準備轉交(Send the Success view)************/
 		req.setAttribute("listClubmemberlist_ByCompositeQuery", list); // 資料庫取出的list物件,存入request
-		RequestDispatcher successView = req.getRequestDispatcher("/clubmemberlist/ClubmemberlistQuery_Clubmemberlist.jsp"); // 成功轉交listEmps_ByCompositeQuery.jsp
+		RequestDispatcher successView = req.getRequestDispatcher("/club_memberlistSvc/ClubmemberlistQuery_Clubmemberlist.jsp"); // 成功轉交listEmps_ByCompositeQuery.jsp
 		successView.forward(req, res);
 		
 		/***************************其他可能的錯誤處理**********************************/

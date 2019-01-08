@@ -174,8 +174,7 @@
 <!---建立社團-----------------------------------------------------------------------------建立社團--->
 				<a href="#" class="list-group-item">文章列表</a>
 				<a href="#" class="list-group-item">影音相簿</a>
-				<a href="<%= request.getContextPath()%>/clubfront.do?actionfront=getOneClubmanage&club_no=${clubVO.club_no}" class="list-group-item">社團管理</a>
-			
+				<a href="#" class="list-group-item">社團管理</a>
 				<a href="<%= request.getContextPath()%>/front-end/club/club_list.jsp" display="none" id="linkBack" class="list-group-item">返回列表</a>
 				<br>
 				<button type="button" class="btn btn-dark" href="<%= request.getContextPath()%>/clubmemberlist.do?action=dropoutclub&club_no=${clubVO.club_no}">
@@ -183,37 +182,22 @@
 				</button>
 				<br><br>
 <%-- 				<button type="button" class="btn btn-info" href="<%= request.getContextPath()%>/front-end/club/club_list.jsp" display="none" id="linkBack">返回列表</button> --%>
-				
-				
-				
+			
 					</div>					
 					</div>
 				<div class="col-xs-12 col-sm-7">
-					
-<!---------------------------- 貼文列表 ------------------------------------->
-					<div class="card text-center" id="post">
-							<div class="card-header">
-								<img src="<%= request.getContextPath()%>/front-end/club/images/C0007.jpg" class="img-fluid" id="clubphoto" width="50%" >
-							</div>
-							<br>
-  							<div class="card-body">
-    							<h5 class="card-title">貼文主題</h5>
-    							<p class="card-text">貼文內容</p>
-  							</div>
-  							<div class="card-footer text-muted">
-    						回文
-  							</div>
-					</div>
-					<br>
-<!-------------------------社團內的揪團 ------------------------------------->
-					<div class="card text-center" >
-  							<div class="card-body">
-    							<p class="card-text">社團內的揪團</p>
-  							</div>
-  							<div class="card-footer text-muted">
-  							</div>
-					</div>
-									
+					<table class="table table-hover">
+  						<tbody>
+	    					<tr>
+	      						<td class="mem_pic">
+	      							社員圖片
+	      						</td>
+	      						<td clss="mem_name">
+	      							社員名稱
+	      						</td>
+	    					</tr>
+  						</tbody>
+					</table>	
 				</div>
 					
 				<div class="col-xs-12 col-lg-2" id="xx">

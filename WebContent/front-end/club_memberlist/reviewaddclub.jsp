@@ -166,15 +166,10 @@ request.setAttribute("club_no","C0001");//COO01未來改成活的
 						<table class="table table-hover">
 <FORM METHOD="post" ACTION="<%=request.getContextPath()%>/clubmemberlist.do" name="form2" >
   							<tbody>
-    							<jsp:useBean id="clubmemberlistSvc" scope="page" class="com.clubmemberlist.model.ClubmemberlistService"/>
-      							<c:forEach var="clubmemberlistVO" items="${clubmemberlistSvc.all}">
 	    							<tr>
 	      								<td class="mem_no">
-	      									<option value="${clubmemberlistVO.mem_no}">
-	      										${clubmemberlistVO.mem_no}
-	<%--      ${sessionScope.memberlistVO.mem_name} --%>
+	      										會員名稱
 	      								</td>
-	      								
 	      								<td>
 	      									<input type="hidden" name="club_no" value="<%=request.getAttribute("club_no")%>"/>
 	      									<input type="hidden" name="mem_no" value="${clubmemberlistVO.mem_no}"/>
@@ -185,7 +180,6 @@ request.setAttribute("club_no","C0001");//COO01未來改成活的
 	      									<button class="btn btn-primary" type="submit" name="action" value="dropoutclub">拒絕</button>
 	      								</td>
 	    							</tr>
-      							</c:forEach>
   							</tbody>
 						</table>
 							<input type="hidden" name="requestURL" value="<%=request.getRequestURI() %>">

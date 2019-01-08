@@ -5,7 +5,7 @@
  * */
 
 
-package com.clubmemberlist.model;
+package com.club_memberlist.model;
 
 import java.util.*;
 

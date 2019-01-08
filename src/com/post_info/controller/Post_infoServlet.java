@@ -47,53 +47,14 @@ if ("getOne_For_Display".equals(action)) {
 
 			try {
 				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
-				String str = req.getParameter("post_no");
-				if (str == null || (str.trim()).length() == 0) {
-					errorMsgs.add("請輸入貼文編號");
-				}
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req
-							.getRequestDispatcher("/post_info/select_page.jsp");
-					failureView.forward(req, res);
-					return;//程式中斷
-				}
-				
-				String post_no = null;
-				try {
-					post_no = new String(str);
-				} catch (Exception e) {
-					errorMsgs.add("貼文編號格式不正確");
-				}
+				String post_no = req.getParameter("post_no");
 				
 				
-				// Send the use back to the form, if there were errors
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req
-							.getRequestDispatcher("/post_info/select_page.jsp");
-					failureView.forward(req, res);
-					return;//程式中斷
-				}
-				
-				// Send the use back to the form, if there were errors
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req
-							.getRequestDispatcher("/post_info/select_page.jsp");
-					failureView.forward(req, res);
-					return;//程式中斷
-				}
 				/***************************2.開始查詢資料*****************************************/
 				Post_infoService post_infoSvc = new Post_infoService();
+				
 				Post_infoVO post_infoVO = post_infoSvc.getOnePost_info(post_no);
-				if (post_infoVO == null) {
-					errorMsgs.add("查無資料");
-				}
-				// Send the use back to the form, if there were errors
-				if (!errorMsgs.isEmpty()) {
-					RequestDispatcher failureView = req
-							.getRequestDispatcher("/post__infoinfo/select_page.jsp");
-					failureView.forward(req, res);
-					return;//程式中斷
-				}
+				
 				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
 				req.setAttribute("post_infoVO", post_infoVO); 
 				String url = "/post_info/listOnePost_info.jsp";
@@ -137,8 +98,8 @@ if ("getOne_For_Update".equals(action)) { // 來自listAllEmp.jsp的請求
 			}
 		}
 		
-		
-if ("update".equals(action)) { // 來自update_emp_input.jsp的請求
+//修改貼文	
+if ("update".equals(action)) { 
 			
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
@@ -146,66 +107,32 @@ if ("update".equals(action)) { // 來自update_emp_input.jsp的請求
 		
 			try {
 				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
-				String post_no =req.getParameter("post_no");
-				
-				String club_no = req.getParameter("club_no");
-				String club_noReg = "^[(A-Z0-9_)]{5,7}$";
-				if (club_no == null || club_no.trim().length() == 0) {
-					errorMsgs.add("社團編號: 請勿空白");
-				} else if(!club_no.trim().matches(club_noReg)) { 
-					errorMsgs.add("社團編號: 只能是英文字母、數字和_ , 且長度必需在5到7之間");
-	            }
-				
-				String mem_no = req.getParameter("mem_no").trim();
-				if (mem_no == null || mem_no.trim().length() == 0) {
-					errorMsgs.add("會員編號請勿空白");
-				}
 				
 				String post_topic = req.getParameter("post_topic").trim();
 				if (post_topic == null || post_topic.trim().length() == 0) {
 					errorMsgs.add("貼文主題請勿空白");
 				}	
-				
 
 				String post_content = req.getParameter("post_content").trim();
 				if (post_content == null || post_content.trim().length() == 0) {
 					errorMsgs.add("貼文內容請勿空白");
 				}	
 
-				
-				
-				Timestamp post_date = null;
-				try {
-					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm");
-					Date date = sdf.parse(req.getParameter("post_date").trim());
-					post_date= new Timestamp(date.getTime());
-					
-				} catch (IllegalArgumentException e) {
-					post_date=new Timestamp(System.currentTimeMillis());
-					errorMsgs.add("請輸入時間!");
-				}
-
 				Post_infoVO post_infoVO = new Post_infoVO();
-				post_infoVO.setPost_no(post_no);
-				post_infoVO.setClub_no(club_no);
-				post_infoVO.setMem_no(mem_no);
 				post_infoVO.setPost_topic(post_topic);
 				post_infoVO.setPost_content(post_content);
-				post_infoVO.setPost_date(post_date);
-				
 
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("post_infoVO", post_infoVO); // 含有輸入格式錯誤的empVO物件,也存入req
+					req.setAttribute("post_infoVO", post_infoVO); 
 					RequestDispatcher failureView = req
 							.getRequestDispatcher("/post_info/update_post_info_input.jsp");
 					failureView.forward(req, res);
 					return; //程式中斷
 				}
-				
 				/***************************2.開始修改資料*****************************************/
 				Post_infoService post_infoSvc = new Post_infoService();
-				post_infoVO = post_infoSvc.updatePost_info(post_no, club_no, mem_no, post_topic, post_content,post_date);
+				post_infoVO = post_infoSvc.updatePost_info(post_topic, post_content);
 				
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
 
@@ -213,7 +140,6 @@ if ("update".equals(action)) { // 來自update_emp_input.jsp的請求
 				String url = requestURL;
 				RequestDispatcher successView = req.getRequestDispatcher(url);   // 修改成功後,轉交回送出修改的來源網頁
 				successView.forward(req, res);
-			
 
 				/***************************其他可能的錯誤處理*************************************/
 			} catch (Exception e) {
@@ -224,27 +150,16 @@ if ("update".equals(action)) { // 來自update_emp_input.jsp的請求
 			}
 		}
 
-if ("insert".equals(action)) { // 來自addEmp.jsp的請求  
+//新增貼文
+if ("insert".equals(action)) {
 			
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
 
 			try {
 				/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
-//				String post_no = req.getParameter("post_no").trim();
-				
 				String club_no = req.getParameter("club_no");
-				String club_noReg = "^[(A-Z0-9_)]{5,7}$";
-				if (club_no == null || club_no.trim().length() == 0) {
-					errorMsgs.add("社團編號: 請勿空白");
-				} else if(!club_no.trim().matches(club_noReg)) { 
-					errorMsgs.add("社團編號: 只能是英文字母、數字和_ , 且長度必需在5到7之間");
-	            }
-				
 				String mem_no = req.getParameter("mem_no").trim();
-				if (mem_no == null || mem_no.trim().length() == 0) {
-					errorMsgs.add("會員編號請勿空白");
-				}
 				
 				String post_topic = req.getParameter("post_topic").trim();
 				if (post_topic == null || post_topic.trim().length() == 0) {
@@ -257,7 +172,6 @@ if ("insert".equals(action)) { // 來自addEmp.jsp的請求
 					errorMsgs.add("貼文內容請勿空白");
 				}	
 
-				
 				
 				Timestamp post_date = null;
 				try {
