@@ -8,10 +8,8 @@ public class CompositeQuery_Club {
 
 		String aCondition = null;
 
-		if ("club_no".equals(columnName) || "sp_no".equals(columnName)) // 用於sg_info有的欄位
+		if ("club_no".equals(columnName) || "sp_no".equals(columnName)) 
 			aCondition = "club."+columnName + " like '%" + value + "%'";
-//		else if("reg_no".equals(columnName))  // 用於venue有的欄位
-//			aCondition = "venue."+columnName + " like '%" + value + "%'";
 		else if("keyword".equals(columnName)) //關鍵字查詢
 			aCondition = "club.club_name" + " like '%" + value + "%'";
 

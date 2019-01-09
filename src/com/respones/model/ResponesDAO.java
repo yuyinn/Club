@@ -39,7 +39,7 @@ public class ResponesDAO  implements ResponesDAO_interface{
 		private static final String GET_ONE_STMT = 
 			"SELECT res_no,post_no,mem_no,res_content,res_date FROM respones where res_no = ?";
 		private static final String UPDATE = 
-			"UPDATE respones set res_no=?, post_no=?, mem_no=?, res_content=?, res_date=?here res_no = ?";
+			"UPDATE respones set res_no=?, post_no=?, mem_no=?, res_content=?, res_date=? where res_no = ?";
 		
 		
 		@Override

@@ -13,6 +13,7 @@ public class Post_infoService {
 		dao = new Post_infoDAO();
 	}
 	
+	//新增貼文
 	public Post_infoVO addPost_info(String club_no,String mem_no,String post_topic,
 			String post_content,Timestamp post_date) {
 		Post_infoVO post_infoVO = new Post_infoVO();

@@ -24,6 +24,7 @@ public class ResponesService {
 		
 	}
 	
+	//回覆文章(時間修改)
 	public ResponesVO updateRespones(String res_no,String post_no,String mem_no,String res_content,Timestamp res_date) {
 		
 		ResponesVO responesVO = new ResponesVO();

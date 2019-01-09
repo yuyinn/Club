@@ -30,7 +30,7 @@ public class ClubfrontServlet extends HttpServlet {
 	private static final String CLUB_LIST = "/front-end/club/club_list.jsp";
 	private static final String CLUB_PAGE = "/front-end/club/club_page.jsp";
 	private static final String CLUB_INTRO = "/front-end/club/club_intro_page.jsp";
-	private static final String CLUB_MANAGE = "/front-end/clubmemberlist/reviewaddclub.jsp";
+	private static final String CLUB_MANAGE = "/front-end/club_memberlist/reviewaddclub.jsp";
 	
 	public ClubfrontServlet(){
 		super();
@@ -137,10 +137,12 @@ if ("getOneClubmanage".equals(actionfront)) { //進入社團管理
 		
 		RequestDispatcher successView = req.getRequestDispatcher(CLUB_MANAGE); 
 		successView.forward(req, res);
-
+		System.out.println("哈囉我在這");
 		/***************************其他可能的錯誤處理*************************************/
 	} catch (Exception e) {
+		
 		errorMsgs.add("無法取得資料:" + e.getMessage());
+		
 		String url = requestURL;
 		url = url.substring(1,url.length());
 		url = url.substring(url.indexOf("/"),url.length());

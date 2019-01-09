@@ -186,18 +186,33 @@
 					</div>					
 					</div>
 				<div class="col-xs-12 col-sm-7">
-					<table class="table table-hover">
-  						<tbody>
-	    					<tr>
-	      						<td class="mem_pic">
-	      							社員圖片
-	      						</td>
-	      						<td clss="mem_name">
-	      							社員名稱
-	      						</td>
-	    					</tr>
-  						</tbody>
-					</table>	
+							
+		<table class="table">
+  			<thead>
+    			<tr>
+      				<th scope="col">成員</th>
+      				<th scope="col">
+      					搜尋成員&nbsp;&nbsp;&nbsp;
+      					<input type="" name="searchclubmember">
+      				</th>  
+    			</tr>
+  			</thead>
+  			<tbody>
+    			<tr>
+      				<th scope="row">管理員</th>
+    			</tr>
+    			<tr>
+    				<td>管理員名字</td>	
+    			</tr>
+    			<tr>
+      				<th scope="row">所有成員</th>
+    			</tr>
+    			<tr>
+    				<td>成員名字</td>	
+    			</tr>
+  			</tbody>
+		</table>
+		
 				</div>
 					
 				<div class="col-xs-12 col-lg-2" id="xx">

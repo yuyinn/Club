@@ -130,14 +130,16 @@
 													<br> <br>
 													<jsp:useBean id="sportSvc" scope="page"
 														class="com.sport.model.SportService" />
-													<div class="form-group">
-														<label class="sport">運動項目</label> <select name="sport" id="sport" class="form-control">
-															<c:forEach var="sportVO" items="${sportSvc.all}">
-																<option value="${sportVO.sp_no}"${(clubVO.sp_no==sportVO.sp_no)?'selected':'' }>
-																${sportVO.sp_name}
-															</c:forEach>
-														</select>
-													</div>
+														<div class="form-group">
+															<label class="sport">運動項目</label> 
+																<select name="sport" id="sport" class="form-control">
+																	<option value="">請選擇運動種類
+													<c:forEach var="sportVO" items="${sportSvc.all}">
+																	<option value="${sportVO.sp_no}" ${(clubVO.sp_no==sportVO.sp_no)?'selected':'' }>
+																	${sportVO.sp_name}
+													</c:forEach>
+																</select>
+														</div>
 													<br> <br>
 
 													<div class="form-group">
