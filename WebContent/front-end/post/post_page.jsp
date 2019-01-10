@@ -47,13 +47,12 @@
 			font-family:Microsoft JhengHei
 			}
 		
-			#postsearch{
-    			padding-left: 5px;
-    			padding-right: 5px;
-    			padding-top: 2px;
-    			padding-bottom: 2px;
-			}
 			
+/* 			#clubphoto{ */
+/* 			max-width:600px;  */
+/* myimg:expression(onload=function(){  */
+/* this.style.width=(this.offsetWidth > 600)?"600px":"auto"}); */
+/* 			} */
 		</style>
 	</head>
 
@@ -65,9 +64,9 @@
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-xs-12 col-lg-2" id="xx1">
-					
+				<!-- 左邊空白 -->		
 				</div>
-				
+
 					<div class="col-xs-12 col-sm-1" style="margin-right: -;padding-left: 5px;padding-right: 5px;">
 						<input type="hidden" name="actionfront" value="getoneclub">
 							<h4 id="club_name" class="_19s-" >
@@ -79,7 +78,7 @@
 					<div class="list-group active">
 						<a href="<%= request.getContextPath()%>/clubfront.do?actionfront=getOneClubintro&club_no=${clubVO.club_no}" display="none" class="list-group-item">簡介</a>
 						<a href="#" class="list-group-item">專屬揪團</a>
-						<!---建立貼文------------------------------------------------------------------建立貼文------>
+<!---建立貼文------------------------------------------------------------------建立貼文------>
 	<% Object object = request.getAttribute("errorMsgs"); %>
 		<% if("insert".equals(request.getParameter("action")) && object != null){
 			List<String> errorMsgs = (List<String>)object;%>
@@ -113,7 +112,9 @@
 						<label class="post_content" >
 							貼文內容
 				<br>
-							<textarea name="content" id="editor" class="form-control" ></textarea>
+							<textarea name="content" id="editor" class="form-control" >
+								This is some sample content.
+							</textarea>
 						</label>
 					</div>
 					<div class="form-group"  style="display:none" >
@@ -167,14 +168,10 @@
 				<div class="col-xs-12 col-sm-7">
 					
 <!---------------------------- 貼文列表 ------------------------------------->
-<input type="text" class="form-control" placeholder="search" style="width:15em">
-  									<button class="btn btn-primary" type="button" id="postsearch">送出</button>
 					<div class="card text-center" id="post">
 							<div class="card-header">
 <%-- 								<img src="<%= request.getContextPath()%>/front-end/club/images/C0007.jpg" class="img-fluid" id="clubphoto" width="50%" > --%>
-  									
-  									
-							</div>
+						
 							<br>
   							<div class="card-body">
     							<h5 class="card-title">貼文主題</h5>

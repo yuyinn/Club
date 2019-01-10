@@ -77,25 +77,7 @@
 						<div class="list-group active">
 						<a href="<%= request.getContextPath()%>/clubfront.do?actionfront=getOneClubintro&club_no=${clubVO.club_no}" display="none" id="linkBack" class="list-group-item">簡介</a>
 						<a href="#" class="list-group-item">成員</a>
-<!---建立社團--------------------------------------------------------------------------------->
-					<% Object object = request.getAttribute("errorMsgs"); %>
-					<% if("insert".equals(request.getParameter("actionfront")) && object != null){
-							List<String> errorMsgs = (List<String>)object;%>
-							<a class="list-group-item list-group-item-actionfront" data-toggle="modal" data-target="#clubModalLong" 
-			 				href="#createclub" role="tab" id="myCreateClud">建立社團</a>
-					<% }else {%>
-							<a class="list-group-item list-group-item-actionfront" data-toggle="modal" data-target="#clubModalLong" 
-			 				href="#createclub" role="tab">建立社團</a>
-					<% }%>
-<%-- 	<c:if test="${param.actionfront=='insert' && errorMsgs!=null}"> --%>
-<!-- 		<a class="list-group-item list-group-item-actionfront" data-toggle="modal" data-target="#clubModalLong" -->
-<!-- 		href="#createclub" role="tab" id="myCreateClud">建立社團</a> -->
-<%-- 	</c:if> --%>
-<%-- 	<c:if test="${!(param.actionfront=='insert' && errorMsgs!=null)}"> --%>
-<!-- 		<a class="list-group-item list-group-item-actionfront" data-toggle="modal" data-target="#clubModalLong" -->
-<!-- 		href="#createclub" role="tab" >建立社團</a> -->
-<%-- 	</c:if> --%>
-<!---Modal------------------------------------------------------------------------------------>
+
 					<div class="modal fade" id="clubModalLong" tabindex="-1" role="dialog" aria-labelledby="clubModalLongTitle" aria-hidden="true">
 						<div class="modal-dialog  .modal-dialog-centered " role="document">
 							<div class="modal-content">

@@ -69,6 +69,15 @@
   	<url-pattern>/clubfront.do</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+  	<servlet-name>Post_infoServlet</servlet-name>
+  	<servlet-class>com.post_info.controller.Post_infoServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>Post_infoServlet</servlet-name>
+  	<url-pattern>/post_info.do</url-pattern>
+  </servlet-mapping>
+  
  
   <servlet>
   	<servlet-name>ClubImgServlet</servlet-name>
