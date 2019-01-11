@@ -1,4 +1,4 @@
-package com.post_info.controller;
+package com.respones.controller;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,16 +19,16 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 
-import com.post_info.model.Post_infoService;
-import com.post_info.model.Post_infoVO;
+import com.respones.model.ResponesService;
+import com.respones.model.ResponesVO;
 
 @MultipartConfig(fileSizeThreshold=1024*1024, maxFileSize=5*1024*1024, maxRequestSize=5*5*1024*1024)
-public class Post_infoServlet extends HttpServlet{
+public class ResponesServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	private static final String CLUBPAGE = "/front-end/club/club_page.jsp";
-	private static final String POSTPAGE = "/front-end/post_info/post_page.jsp";
+	private static final String POSTPAGE = "/front-end/respones/post_page.jsp";
 	
-	public Post_infoServlet(){
+	public ResponesServlet(){
 		super();
 	}
 	public void doGet(HttpServletRequest req, HttpServletResponse res)
@@ -42,8 +42,7 @@ public class Post_infoServlet extends HttpServlet{
 		req.setCharacterEncoding("UTF-8");
 		String action = req.getParameter("action");
 		
-//顯示貼文
-if ("getOnePost_display".equals(action)) { 
+if ("getOne_For_Display".equals(action)) { 
 
 			List<String> errorMsgs = new LinkedList<String>();
 			req.setAttribute("errorMsgs", errorMsgs);
@@ -51,13 +50,16 @@ if ("getOnePost_display".equals(action)) {
 			try {
 				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
 				String post_no = req.getParameter("post_no");
+				
+				
 				/***************************2.開始查詢資料*****************************************/
-				Post_infoService post_infoSvc = new Post_infoService();
-				Post_infoVO post_infoVO = post_infoSvc.getOnePost_info(post_no);
+				ResponesService responesSvc = new ResponesService();
+				
+				ResponesVO responesVO = responesSvc.getOneRespones(post_no);
 				
 				/***************************3.查詢完成,準備轉交(Send the Success view)*************/
-				req.setAttribute("post_infoVO", post_infoVO); 
-				String url = CLUBPAGE;
+				req.setAttribute("responesVO", responesVO); 
+				String url = "/respones/listOneRespones.jsp";
 				RequestDispatcher successView = req.getRequestDispatcher(url); 
 				successView.forward(req, res);
 
@@ -65,13 +67,40 @@ if ("getOnePost_display".equals(action)) {
 			} catch (Exception e) {
 				errorMsgs.add("無法取得資料:" + e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher(CLUBPAGE);
+						.getRequestDispatcher("/respones/select_page.jsp");
 				failureView.forward(req, res);
 			}
 		}
 		
+		
+if ("getOne_For_Update".equals(action)) { // 來自listAllEmp.jsp的請求
 
-//修改貼文	
+			List<String> errorMsgs = new LinkedList<String>();
+			req.setAttribute("errorMsgs", errorMsgs);
+			
+			try {
+				/***************************1.接收請求參數****************************************/
+				String post_no = req.getParameter("post_no");
+				
+				/***************************2.開始查詢資料****************************************/
+				ResponesService responesSvc = new ResponesService();
+				ResponesVO responesVO = responesSvc.getOneRespones(post_no);
+								
+				/***************************3.查詢完成,準備轉交(Send the Success view)************/
+				req.setAttribute("responesVO", responesVO);         // 資料庫取出的empVO物件,存入req
+				String url = "/respones/update_respones_input.jsp";
+				RequestDispatcher successView = req.getRequestDispatcher(url);// 成功轉交 update_emp_input.jsp
+				successView.forward(req, res);
+				/***************************其他可能的錯誤處理**********************************/
+			} catch (Exception e) {
+				errorMsgs.add("無法取得要修改的資料:" + e.getMessage());
+				RequestDispatcher failureView = req
+						.getRequestDispatcher("/respones/listAllRespones.jsp");
+				failureView.forward(req, res);
+			}
+		}
+		
+//修改回覆
 if ("update".equals(action)) { 
 			
 			List<String> errorMsgs = new LinkedList<String>();
@@ -81,35 +110,32 @@ if ("update".equals(action)) {
 			try {
 				/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
 				
-				String post_topic = req.getParameter("post_topic").trim();
-				if (post_topic == null || post_topic.trim().length() == 0) {
-					errorMsgs.add("貼文主題請勿空白");
-				}	
-
-				String post_content = req.getParameter("post_content").trim();
-				if (post_content == null || post_content.trim().length() == 0) {
+				String res_content = req.getParameter("res_content").trim();
+				if (res_content == null || res_content.trim().length() == 0) {
 					errorMsgs.add("貼文內容請勿空白");
 				}	
+				
+				Timestamp res_date = new Timestamp(System.currentTimeMillis());
 
-				Post_infoVO post_infoVO = new Post_infoVO();
-				post_infoVO.setPost_topic(post_topic);
-				post_infoVO.setPost_content(post_content);
-
+				ResponesVO responesVO = new ResponesVO();
+				responesVO.setRes_content(res_content);
+				responesVO.setRes_date(res_date);
+				
+				
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
-					req.setAttribute("post_infoVO", post_infoVO); 
 					RequestDispatcher failureView = req
-							.getRequestDispatcher(POSTPAGE);
+							.getRequestDispatcher(CLUBPAGE);
 					failureView.forward(req, res);
-					return; //程式中斷
+					return;
 				}
 				/***************************2.開始修改資料*****************************************/
-				Post_infoService post_infoSvc = new Post_infoService();
-				post_infoVO = post_infoSvc.updatePost_info(post_topic, post_content);
+				ResponesService responesSvc = new ResponesService();
+				responesVO = responesSvc.updateRespones(res_content,  res_date);
 				
 				/***************************3.修改完成,準備轉交(Send the Success view)*************/
 
-				req.setAttribute("Post_infoVO", post_infoVO);
+				req.setAttribute("ResponesVO", responesVO);
 				String url = requestURL;
 				RequestDispatcher successView = req.getRequestDispatcher(url);   // 修改成功後,轉交回送出修改的來源網頁
 				successView.forward(req, res);
@@ -118,12 +144,12 @@ if ("update".equals(action)) {
 			} catch (Exception e) {
 				errorMsgs.add("修改資料失敗:"+e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher(POSTPAGE);
+						.getRequestDispatcher("front-end/respones/update_respones_input.jsp");
 				failureView.forward(req, res);
 			}
 		}
 
-//新增貼文
+//新增回覆
 if ("insert".equals(action)) {
 			
 			List<String> errorMsgs = new LinkedList<String>();
@@ -131,23 +157,18 @@ if ("insert".equals(action)) {
 
 			try {
 				/***********************1.接收請求參數 - 輸入格式的錯誤處理*************************/
-				String club_no = req.getParameter("club_no");
+				String post_no = req.getParameter("post_no");
 				
 				String mem_no = req.getParameter("mem_no");
 				
-				String post_topic = req.getParameter("post_topic").trim();
-				if (post_topic == null || post_topic.trim().length() == 0) {
-					errorMsgs.add("貼文主題請勿空白");
-				}	
-
-				String post_content = req.getParameter("post_content").trim();
-				if (post_content == null || post_content.trim().length() == 0) {
+				
+				String res_content = req.getParameter("res_content").trim();
+				if (res_content == null || res_content.trim().length() == 0) {
 					errorMsgs.add("貼文內容請勿空白");
 				}	
 				
-				Timestamp post_date = new Timestamp(System.currentTimeMillis());
-
-			
+				Timestamp res_date = new Timestamp(System.currentTimeMillis());
+				
 				// Send the use back to the form, if there were errors
 				if (!errorMsgs.isEmpty()) {
 					RequestDispatcher failureView = req
@@ -155,53 +176,24 @@ if ("insert".equals(action)) {
 					failureView.forward(req, res);
 					return;
 				}
-				System.out.println("哈囉我在這");
+				
 				/***************************2.開始新增資料***************************************/
-				Post_infoService post_infoSvc = new Post_infoService();
-				Post_infoVO post_infoVO = post_infoSvc.addPost_info(club_no, mem_no, post_topic, post_content,post_date);
+				ResponesService responesSvc = new ResponesService();
+				ResponesVO responesVO = responesSvc.addRespones(post_no, mem_no, res_content, res_date);
 				
 				/***************************3.新增完成,準備轉交(Send the Success view)***********/
-				req.setAttribute("post_infoVO", post_infoVO);
+				req.setAttribute("responesVO", responesVO);
 				String url = (POSTPAGE);
-				RequestDispatcher successView = req.getRequestDispatcher(url); 
+				RequestDispatcher successView = req.getRequestDispatcher(url); // 新增成功後轉交listAllEmp.jsp
 				successView.forward(req, res);				
 				
 				/***************************其他可能的錯誤處理**********************************/
 			} catch (Exception e) {
 				errorMsgs.add(e.getMessage());
 				RequestDispatcher failureView = req
-						.getRequestDispatcher(POSTPAGE);
+						.getRequestDispatcher(CLUBPAGE);
 				failureView.forward(req, res);
 			}
-		}
-
-
-//刪除貼文
-if ("delete".equals(action)) { 
-	
-			List<String> errorMsgs = new LinkedList<String>();
-			req.setAttribute("errorMsgs", errorMsgs);
-
-		try {
-		/***************************1.接收請求參數 - 輸入格式的錯誤處理**********************/
-			String post_no = req.getParameter("post_no");
-		/***************************2.開始查詢資料*****************************************/
-			Post_infoService post_infoSvc = new Post_infoService();
-			Post_infoVO post_infoVO = post_infoSvc.getOnePost_info(post_no);
-		
-		/***************************3.查詢完成,準備轉交(Send the Success view)*************/
-			req.setAttribute("post_infoVO", post_infoVO); 
-			String url = CLUBPAGE;
-			RequestDispatcher successView = req.getRequestDispatcher(url); 
-			successView.forward(req, res);
-
-		/***************************其他可能的錯誤處理*************************************/
-		} catch (Exception e) {
-			errorMsgs.add("無法取得資料:" + e.getMessage());
-			RequestDispatcher failureView = req
-					.getRequestDispatcher(CLUBPAGE);
-			failureView.forward(req, res);
-		}
 		}
 		
 	}

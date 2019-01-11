@@ -24,13 +24,10 @@ public class ResponesService {
 		
 	}
 	
-	//回覆文章(時間修改)
-	public ResponesVO updateRespones(String res_no,String post_no,String mem_no,String res_content,Timestamp res_date) {
+	//回覆文章
+	public ResponesVO updateRespones(String res_content,Timestamp res_date) {
 		
 		ResponesVO responesVO = new ResponesVO();
-		responesVO.setRes_no(res_no);
-		responesVO.setPost_no(post_no);
-		responesVO.setMem_no(mem_no);
 		responesVO.setRes_content(res_content);
 		responesVO.setRes_date(res_date);
 		dao.update(responesVO);

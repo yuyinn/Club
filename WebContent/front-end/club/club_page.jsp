@@ -31,6 +31,7 @@
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js"></script>
 		<![endif]-->
 		<script src="https://cdn.ckeditor.com/ckeditor5/11.2.0/classic/ckeditor.js"></script>
+		
 		<style type="text/css">
 			
 			textarea {
@@ -115,6 +116,7 @@
 				<br>
 							<textarea name="content" id="editor" class="form-control" ></textarea>
 						</label>
+						
 					</div>
 					<div class="form-group"  style="display:none" >
 						<label class="club_no">社團編號</label>
@@ -128,6 +130,7 @@
 						<label class="post_date">發布時間</label>
 							<textarea name="post_date"  id="post_date" class="form-control" ROWS=10 ></textarea>
 					</div>
+					
 				</div>
 				
 				<div class="modal-footer">
@@ -157,7 +160,7 @@
 			
 						<a href="<%= request.getContextPath()%>/front-end/club/club_list.jsp" display="none" id="linkBack" class="list-group-item">返回列表</a>
 				<br>
-						<button type="button" class="btn btn-dark" href="<%= request.getContextPath()%>/clubmemberlist.do?action=dropoutclub&club_no=${clubVO.club_no}">
+						<button type="button" class="btn btn-dark" href="<%=request.getContextPath()%>/clubmemberlist.do?action=dropoutclub&club_no=${clubVO.club_no}">
 								退出社團
 						</button>
 				<br><br>
@@ -177,8 +180,10 @@
 							</div>
 							<br>
   							<div class="card-body">
-    							<h5 class="card-title">貼文主題</h5>
-    							<p class="card-text">貼文內容</p>
+  							<c:forEach var="post_infoVO" items="${list}">
+    							<h5 class="card-title" display="none" class="list-group-item">${post_infoVO.post_topic}</h5>
+    							<p class="card-text">${post_infoVO.post_content}</p>
+    						</c:forEach>
   							</div>
   							<div class="card-footer text-muted">
     						回文
@@ -213,5 +218,7 @@
 					console.error( error );
 				} );
 		</script>
+	
+
 	</body>
 </html>

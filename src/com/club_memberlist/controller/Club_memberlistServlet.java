@@ -223,18 +223,16 @@ if ("cmem_list".equals(action)) {
 		
 		String club_no = req.getParameter("club_no");
 		String mem_no =  req.getParameter("mem_no");
-		String cmem_class = req.getParameter("cmem_class");
 		
 		
 		Club_memberlistVO club_memberlistVO = new Club_memberlistVO();
 		
 		club_memberlistVO.setClub_no(club_no);
 		club_memberlistVO.setMem_no(mem_no);
-		club_memberlistVO.setCmem_class(cmem_class);
 		
 		/***************************2.開始修改資料*****************************************/
 		Club_memberlistService club_memberlistSvc = new Club_memberlistService();
-		club_memberlistVO = club_memberlistSvc.cmem_list(club_no, mem_no,cmem_class);
+		club_memberlistVO = club_memberlistSvc.getOneClubmemberlist(club_no, mem_no);
 		
 		/***************************3.修改完成,準備轉交(Send the Success view)*************/
 
